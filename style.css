@@ -1,0 +1,12 @@
+.card-img-top {
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+}
+.card{
+    height: 100px;
+}
+.ModiBox {
+    background-image: url("./images/back1.jpg");
+    background-size: cover;
+}
