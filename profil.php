@@ -43,42 +43,7 @@
         </header>
 
         <main class="container-fluid pt-5">
-            <section class="container pt-5">
-                <h2 class="pt-5">Filtrer la liste des annonces !</h2>
-                <form class="row row-cols-1 row-cols-lg-3" action="" method="POST">
-                    <div class="col">
-                        <h5 for="type">Categorie</h5>
-                        <select class="form-select" aria-label="type" name="categorie">
-                            <option></option>
-                            <option value="Location">Location</option>
-                            <option value="Vente">Vente</option>
-                        </select>
-                    </div>
-
-                    <div class="col">
-                        <h5>Prix : </h5>
-                        <div class="d-flex gap-1">
-                            <input type="number" class="form-control" name="Min" min="0" value="<?php if (isset($_POST['Min'])) echo $_POST['Min']; ?>">
-                            <input type="number" class="form-control" name="Max" min="0" value="<?php if (isset($_POST['Max'])) echo $_POST['Max']; ?>">
-                        </div>
-                    </div>
-
-                    <div class="col d-flex align-items-end mt-2">
-                        <button class="btn btn-dark w-100" type="submit" name="chercher">Chercher</button>
-                    </div>
-                </form>
-            </section>
-            <section class="container mt-5" id="Annonce">
-                <h2>Liste des Annonces disponible : </h2>
-
-
-                <?php
-                    $result = $search_results->setFetchMode(PDO::FETCH_ASSOC);
-                    print_r($result);
-                    print_r($result);
-                    echo 'test';
-                ?>
-            </section>
+            
         </main>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
