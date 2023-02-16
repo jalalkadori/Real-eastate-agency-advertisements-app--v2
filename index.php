@@ -1,4 +1,4 @@
-<?php include("./connexion.php"); ?>
+<?php include("./dbConnection.php"); ?>
 
 <!doctype html>
 <html lang="en">
