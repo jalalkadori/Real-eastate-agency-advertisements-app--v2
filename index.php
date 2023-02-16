@@ -75,6 +75,7 @@
                 <?php
                     $result = $search_results->setFetchMode(PDO::FETCH_ASSOC);
                     print_r($result);
+                    print_r($result);
                 ?>
             </section>
         </main>
