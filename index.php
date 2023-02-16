@@ -32,9 +32,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="#Annonce">Annonces</a>
                                 </li>
-                                <li class="nav-item">
+                                <!-- <li class="nav-item">
                                     <a href="ajout.php" class="btn btn-outline-light"> + Ajouter une Annonce</a>
-                                </li>
+                                </li> -->   
                             </ul>
                         </div>
                     </div>
@@ -45,7 +45,15 @@
         <main class="container-fluid pt-5">
             <section class="container pt-5">
                 <h2 class="pt-5">Filtrer la liste des annonces !</h2>
-                <form class="row row-cols-1 row-cols-lg-3" action="" method="POST">
+                <form class="row row-cols-1 row-cols-lg-4" action="" method="POST">
+                    <div class="col">
+                        <h5 for="type">Ville</h5>
+                        <select class="form-select" aria-label="type" name="categorie">
+                            <option></option>
+                            <option value="Location">Tanger</option>
+                            <option value="Vente">Casablanca</option>
+                        </select>
+                    </div>
                     <div class="col">
                         <h5 for="type">Categorie</h5>
                         <select class="form-select" aria-label="type" name="categorie">
@@ -73,10 +81,10 @@
 
 
                 <?php
-                    $result = $search_results->setFetchMode(PDO::FETCH_ASSOC);
-                    print_r($result);
-                    print_r($result);
-                    echo 'test';
+                    // $result = $search_results->setFetchMode(PDO::FETCH_ASSOC);
+                    // print_r($result);
+                    // print_r($result);
+                    // echo 'test';
                 ?>
             </section>
         </main>
