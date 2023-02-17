@@ -34,8 +34,8 @@
                                     <a class="nav-link" href="#Annonce">Annonces</a>
                                 </li>  
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#Annonce">
-                                    <i class="fa-dark fa-user"></i>
+                                    <a class="nav-link" href="./inscription.php">
+                                        <i class="fa-solid fa-user-plus"></i>
                                     </a>
                                 </li>  
                             </ul>
@@ -82,7 +82,13 @@
                 <h2>Liste des Annonces disponible : </h2>
                 <?php 
                    
-                    displayCards($search_results);
+                    displayCards($img_principale);
+
+                    // function img_pricipale($img) {
+                    //     while ($row = $img->fetch(PDO::FETCH_ASSOC)) {
+                    //         echo("");
+                    //     }
+                    // }
 
                     function displayCards($arrToBeDisplayed) {
                         echo "<div class='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5'>";
@@ -90,9 +96,9 @@
                             echo("
                                 <div class='col mt-2'>
                                     <div class='card'>
-                                        <img src='' class='card-img-top'>
+                                        <img src='".$row["CH_Image"]."' class='card-img-top'>
                                         <div class='card-body'>
-                                            <h6 class='card-title'>".$row["T_Annonce"]." en ".$row["Type_Annonce"]." de ".$row["Superficie"]." m²</h6>
+                                            <h6 class='card-title'>".$row["T_Annonce"]." de ".$row["Superficie"]." m²</h6>
                                             <div class='d-flex justify-content-between align-items-center'>
                                                 <h5 class='text-danger fs-5'>".$row["P_Annonce"]." DH</h5>
                                             </div>

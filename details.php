@@ -31,12 +31,6 @@
                                 <li class="nav-item">
                                     <a href="index.php" class="nav-link active" aria-current="page">Home</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#Annonce">Annonces</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="ajout.php" class="btn btn-outline-light"> + Ajouter une Annonce</a>
-                                </li>
                             </ul>
                         </div>
                     </div>
@@ -61,11 +55,57 @@
 
                                  while ($row = $search_results->fetch(PDO::FETCH_ASSOC)) {
                                     echo("
-                                        <div class='col mt-2'>
-                                            <div class='card dcard'>
-                                                <img src='' class='card-img-top'>
+                                        <div class='col-sm-8 mt-5'>
+                                            <div class='card'>
+
+                                                <div id='carouselExampleAutoplaying' class='carousel slide' data-bs-ride='carousel'>
+                                                    <div class='carousel-inner'>
+                                                        <div class='carousel-item active'>
+                                                        <img src='' class='d-block w-100' alt='...'>
+                                                        </div>
+                                                        <div class='carousel-item'>
+                                                        <img src='...' class='d-block w-100' alt='...'>
+                                                        </div>
+                                                        <div class='carousel-item'>
+                                                        <img src='...' class='d-block w-100' alt='...'>
+                                                        </div>
+                                                    </div>
+                                                    <button class='carousel-control-prev' type='button' data-bs-target='#carouselExampleAutoplaying' data-bs-slide='prev'>
+                                                        <span class='carousel-control-prev-icon' aria-hidden='true'></span>
+                                                        <span class='visually-hidden'>Previous</span>
+                                                    </button>
+                                                    <button class='carousel-control-next' type='button' data-bs-target='#carouselExampleAutoplaying' data-bs-slide='next'>
+                                                        <span class='carousel-control-next-icon' aria-hidden='true'></span>
+                                                        <span class='visually-hidden'>Next</span>
+                                                    </button>
+                                                </div>
+
                                                 <div class='card-body'>
-                                                    <h6 class='card-title'>".$row["T_Annonce"]." en ".$row["Type_Annonce"]." de ".$row["Superficie"]." m²</h6>
+                                                    <div class='row'>
+                                                        <div class='col'>
+                                                        <h6 class='card-title'>".$row["T_Annonce"]." en ".$row["Type_Annonce"]." de ".$row["Superficie"]." m²</h6></div>
+                                                        <div class='col d-flex justify-content-end'>
+                                                            <!-- Button trigger modal -->
+                                                                <button type='button' class='btn btn-dark' data-bs-toggle='modal' data-bs-target='#exampleModal'>
+                                                                Contacter L'annonceur !
+                                                                </button>
+                                                                
+                                                            <!-- Modal -->
+                                                                <div class='modal fade' id='exampleModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+                                                                <div class='modal-dialog'>
+                                                                    <div class='modal-content'>
+                                                                    <div class='modal-header'>
+                                                                        <button type='button' class='btn-close btn btn-light' data-bs-dismiss='modal' aria-label='Close'></button>
+                                                                    </div>
+                                                                    <div class='modal-body text-center'>
+                                                                        <p class='fs-2 text-danger' >+212 60102949570</p>                                                                    </div>
+                                                                    <div class='modal-footer'></div>
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                    
                                                     <div class='d-flex justify-content-between align-items-center'>
                                                         <h5 class='text-danger fs-5'>".$row["P_Annonce"]." DH</h5>
                                                     </div>

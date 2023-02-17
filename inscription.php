@@ -29,12 +29,8 @@
                                 <li class="nav-item">
                                     <a href="index.php" class="nav-link active" aria-current="page">Home</a>
                                 </li>
-                                
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#Annonce">Annonces</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="ajout.php" class="btn btn-outline-light"> + Ajouter une Annonce</a>
+                                    <a href="connection.php" class="btn btn-outline-light"> Connectez-Vous !</a>
                                 </li>
                             </ul>
                         </div>
@@ -43,7 +39,7 @@
             </div>
         </header>
         <br>
-        <main class="signupbox mt-5 pt-5">
+        <main class="mt-5 pt-5">
             <div class="container-fluid pt-5">
                 <div class="row">
                     <div class="col d-flex justify-content-center">
@@ -52,26 +48,26 @@
                             <form class=" ">
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Nom :</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    <input type="text" class="form-control">
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Prénom</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    <input type="text" class="form-control">
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Numero de telephone</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    <input type="tel" class="form-control">
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Email address</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    <input type="email" class="form-control">
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputPassword1" class="form-label">Password</label>
                                     <input type="password" class="form-control" id="exampleInputPassword1">
                                 </div>
                             
-                                <button type="submit" class="btn btn-dark w-100">Submit</button>
+                                <button type="submit" class="btn btn-dark w-100">Creer votre compte</button>
                             </form>
                         </div>
                         </div>

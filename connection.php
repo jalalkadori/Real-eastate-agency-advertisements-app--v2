@@ -14,8 +14,6 @@
 
     <body>
     <header class="container-fluid bg-dark fixed-top mb-1">
-            <div class="container ">
-        <header class="container-fluid bg-dark fixed-top mb-1">
             <div class="container">
                 <nav class="navbar navbar-expand-lg navbar-dark py-2">
                     <div class="container-fluid">
@@ -30,43 +28,42 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 text-light">
                                 <li class="nav-item">
-                                    <a href="index.php" class="nav-link active" aria-current="page">Home</a>
-                                </li>
-                                
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#Annonce">Annonces</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="ajout.php" class="btn btn-outline-light"> + Ajouter une Annonce</a>
+                                    <a href="./index.php" class="nav-link active" aria-current="page">Home</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </nav>
             </div>
-        </header>
+        </div>
+    </header>
         <br>
-        <main class="signupbox mt-5 pt-5">
+        <main class="mt-5 pt-5">
             <div class="container-fluid pt-5">
                 <div class="row">
                     <div class="col d-flex justify-content-center align-items-center">
-                    <div class="card" style="width: 20rem;">
-                        <div class="card-body">
-                            <form class=" ">
-                                <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Email address</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1">
-                                </div>
-                            
-                                <button type="submit" class="btn btn-dark w-100">Submit</button>
-                            </form>
-                        </div>
+                        <div class="card" style="width: 20rem;">
+                            <div class="card-body">
+                                <form class="">
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Email address</label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputPassword1" class="form-label">Password</label>
+                                        <input type="password" class="form-control" id="exampleInputPassword1">
+                                    </div>
+                                
+                                    <button type="submit" class="btn btn-dark w-100 mb-3">Connexion</button>
+
+                                    <div class="mb-3">
+                                        <a href="./inscription.php" class="btn btn-outline-dark w-100">Creer un compte !</a>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
 
