@@ -102,7 +102,7 @@
                                             <div class='d-flex justify-content-between align-items-center'>
                                                 <h5 class='text-danger fs-5'>".$row["P_Annonce"]." DH</h5>
                                             </div>
-                                            <p class='fs-6'>".$row["A_Annonce"]."</p>
+                                            <p class='fs-6'>".$row["A_Annonce"]." , ".$row["Ville"]."</p>
                                             <p class='fs-6'>Publié le ".$row["Date_Pub"].".</p>
                                             <a class='btn btn-dark w-100' href='./details.php?id=".$row["N_Annonce"]."'>Voir Plus ...</a>
                                         </div>
