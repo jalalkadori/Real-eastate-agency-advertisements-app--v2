@@ -1,31 +1,22 @@
 <?php include("./dbConnection.php"); ?>
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 <!doctype html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-<<<<<<< Updated upstream
         <title>IMMO HORIZON | Inscription</title>
-=======
         <title>IMMO HORIZON</title>
->>>>>>> Stashed changes
         <link rel="stylesheet" href="style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     </head>
 
     <body>
-<<<<<<< Updated upstream
     <header class="container-fluid bg-dark fixed-top mb-1">
             <div class="container ">
-=======
         <header class="container-fluid bg-dark fixed-top mb-1">
             <div class="container">
->>>>>>> Stashed changes
                 <nav class="navbar navbar-expand-lg navbar-dark py-2">
                     <div class="container-fluid">
                         <a class="navbar-brand" href="index.php">
@@ -41,23 +32,19 @@
                                 <li class="nav-item">
                                     <a href="index.php" class="nav-link active" aria-current="page">Home</a>
                                 </li>
-<<<<<<< Updated upstream
                                 
-=======
                                 <li class="nav-item">
                                     <a class="nav-link" href="#Annonce">Annonces</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="ajout.php" class="btn btn-outline-light"> + Ajouter une Annonce</a>
                                 </li>
->>>>>>> Stashed changes
                             </ul>
                         </div>
                     </div>
                 </nav>
             </div>
         </header>
-<<<<<<< Updated upstream
         <br>
         <main class="signupbox mt-5 pt-5">
             <div class="container-fluid pt-5">
@@ -82,11 +69,9 @@
                     </div>
                 </div>
             </div>
-=======
 
         <main class="container-fluid pt-5">
             
->>>>>>> Stashed changes
         </main>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"

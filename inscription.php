@@ -12,11 +12,8 @@
 
     <body>
         <header class="container-fluid bg-dark fixed-top mb-1">
-<<<<<<< Updated upstream
             <div class="container ">
-=======
             <div class="container">
->>>>>>> Stashed changes
                 <nav class="navbar navbar-expand-lg navbar-dark py-2">
                     <div class="container-fluid">
                         <a class="navbar-brand" href="index.php">
@@ -32,23 +29,19 @@
                                 <li class="nav-item">
                                     <a href="index.php" class="nav-link active" aria-current="page">Home</a>
                                 </li>
-<<<<<<< Updated upstream
                                 
-=======
                                 <li class="nav-item">
                                     <a class="nav-link" href="#Annonce">Annonces</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="ajout.php" class="btn btn-outline-light"> + Ajouter une Annonce</a>
                                 </li>
->>>>>>> Stashed changes
                             </ul>
                         </div>
                     </div>
                 </nav>
             </div>
         </header>
-<<<<<<< Updated upstream
         <br>
         <main class="signupbox mt-5 pt-5">
             <div class="container-fluid pt-5">
@@ -86,7 +79,6 @@
                 </div>
             </div>
         </main>
-=======
 
         <form action='' method ='Post' class='mt-5  pt-5'>
             <button type='submit' name='btn'>create password</button>
@@ -111,7 +103,6 @@
         </main>
 
 
->>>>>>> Stashed changes
 
 
 
