@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <script src="https://kit.fontawesome.com/75c6b1327b.js" crossorigin="anonymous"></script>
     </head>
 
     <body>
@@ -31,10 +32,12 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#Annonce">Annonces</a>
-                                </li>
-                                <!-- <li class="nav-item">
-                                    <a href="ajout.php" class="btn btn-outline-light"> + Ajouter une Annonce</a>
-                                </li> -->   
+                                </li>  
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#Annonce">
+                                    <i class="fa-dark fa-user"></i>
+                                    </a>
+                                </li>  
                             </ul>
                         </div>
                     </div>
@@ -47,14 +50,6 @@
                 <h2 class="pt-5">Filtrer la liste des annonces !</h2>
                 <form class="row row-cols-1 row-cols-lg-4" action="" method="POST">
                     <div class="col">
-                        <h5 for="type">Ville</h5>
-                        <select class="form-select" aria-label="type" name="categorie">
-                            <option></option>
-                            <option value="Location">Tanger</option>
-                            <option value="Vente">Casablanca</option>
-                        </select>
-                    </div>
-                    <div class="col">
                         <h5 for="type">Categorie</h5>
                         <select class="form-select" aria-label="type" name="categorie">
                             <option></option>
@@ -62,7 +57,14 @@
                             <option value="Vente">Vente</option>
                         </select>
                     </div>
-
+                    <div class="col">
+                        <h5 for="type">Ville</h5>
+                        <select class="form-select" aria-label="type" name="categorie">
+                            <option></option>
+                            <option value="Location">Tanger</option>
+                            <option value="Vente">Casablanca</option>
+                        </select>
+                    </div>
                     <div class="col">
                         <h5>Prix : </h5>
                         <div class="d-flex gap-1">
@@ -78,11 +80,36 @@
             </section>
             <section class="container mt-5" id="Annonce">
                 <h2>Liste des Annonces disponible : </h2>
+                <?php 
+                   
+                    displayCards($search_results);
 
+                    function displayCards($arrToBeDisplayed) {
+                        echo "<div class='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5'>";
+                        while ($row = $arrToBeDisplayed->fetch(PDO::FETCH_ASSOC)) {
+                            echo("
+                                <div class='col mt-2'>
+                                    <div class='card'>
+                                        <img src='' class='card-img-top'>
+                                        <div class='card-body'>
+                                            <h6 class='card-title'>".$row["T_Annonce"]." en ".$row["Type_Annonce"]." de ".$row["Superficie"]." m²</h6>
+                                            <div class='d-flex justify-content-between align-items-center'>
+                                                <h5 class='text-danger fs-5'>".$row["P_Annonce"]." DH</h5>
+                                            </div>
+                                            <p class='fs-6'>".$row["A_Annonce"]."</p>
+                                            <p class='fs-6'>Publié le ".$row["Date_Pub"].".</p>
+                                            <a class='btn btn-dark w-100' href='./details.php?id=".$row["N_Annonce"]."'>Voir Plus ...</a>
+                                        </div>
+                                    </div>
+                                </div>"
 
-                <?php
-                    $result = $search_results->setFetchMode(PDO::FETCH_ASSOC);
-                    print_r($result);
+                            );
+                        } 
+                        echo "</div>";
+
+                    }
+                    
+                    
                 ?>
             </section>
         </main>

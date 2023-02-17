@@ -1,4 +1,6 @@
-<?php include("./dbConnection.php"); ?>
+<?php include("./dbConnection.php"); 
+
+?>
 
 <!doctype html>
 <html lang="en">
@@ -42,8 +44,44 @@
             </div>
         </header>
 
-        <main class="container-fluid pt-5">
-           
+        <main class="container-fluid mt-5 pt-5">
+           <div class="container-fluid ">
+                <div class="container ">
+                    <div class="row">
+                        <div class="col">
+                            <?php 
+
+                                if(isset($_GET["id"])){
+                                    $id= $_GET["id"];  
+                                }
+
+                                 $search_request = "SELECT * FROM `annonces` where `N_Annonce` = $id";
+                                 $search_results = $db_connection->prepare($search_request);
+                                 $search_results->execute();
+
+                                 while ($row = $search_results->fetch(PDO::FETCH_ASSOC)) {
+                                    echo("
+                                        <div class='col mt-2'>
+                                            <div class='card dcard'>
+                                                <img src='' class='card-img-top'>
+                                                <div class='card-body'>
+                                                    <h6 class='card-title'>".$row["T_Annonce"]." en ".$row["Type_Annonce"]." de ".$row["Superficie"]." m²</h6>
+                                                    <div class='d-flex justify-content-between align-items-center'>
+                                                        <h5 class='text-danger fs-5'>".$row["P_Annonce"]." DH</h5>
+                                                    </div>
+                                                    <p class='fs-6'>".$row["A_Annonce"]."</p>
+                                                    <p class='fs-6'>Publié le ".$row["Date_Pub"].".</p>                            
+                                                </div>
+                                            </div>
+                                        </div>"
+        
+                                    );
+                                } 
+                            ?>
+                        </div>
+                    </div>
+                </div>
+           </div>
         
         </main>
 
