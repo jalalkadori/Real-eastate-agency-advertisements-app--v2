@@ -11,6 +11,8 @@
         <link rel="stylesheet" href="style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <link rel="stylesheet" href="./slider/css/my-slider.css"/>
+        <script src="./slider/js/ism-2.2.min.js"></script>
     </head>
 
     <body>
@@ -57,38 +59,26 @@
                                  $image_gallery = $db_connection->prepare($image_gallery_request);
                                  $image_gallery->execute();
 
-                                 while ($row = $image_gallery->fetch(PDO::FETCH_ASSOC)) {
-                                    echo ("
-                                      
-                                        <img src='".$row['CH_Image']."' class='d-block w-100'>
-                                       
-                                        ");
-                                }
+                              
 
-                                echo ("
-                                
-                                    <div id='carouselExampleAutoplaying' class='carousel slide' data-bs-ride='carousel'>
-                                    <div class='carousel-inner'>
-                                ");
-                                while ($row = $image_gallery->fetch(PDO::FETCH_ASSOC)) {
+                                // <img src='".$row['CH_Image']."' class='d-block w-100'>
+                              
                                     echo ("
-                                      
-                                        <img src='".$row['CH_Image']."' class='d-block w-100'>
-                                       
+                                    <div class='ism-slider' data-transition_type='fade' id='img-gallery'>
+                                        <ol>
                                         ");
-                                }
-                                echo("
-                                    </div>
-                                    <button class='carousel-control-prev' type='button' data-bs-target='#carouselExampleAutoplaying' data-bs-slide='prev'>
-                                    <span class='carousel-control-prev-icon' aria-hidden='true'></span>
-                                    <span class='visually-hidden'>Previous</span>
-                                    </button>
-                                    <button class='carousel-control-next' type='button' data-bs-target='#carouselExampleAutoplaying' data-bs-slide='next'>
-                                    <span class='carousel-control-next-icon' aria-hidden='true'></span>
-                                    <span class='visually-hidden'>Next</span>
-                                    </button>
-                                    </div>
-                                ");
+                                        while ($row = $image_gallery->fetch(PDO::FETCH_ASSOC)) {
+                                            echo ("
+                                            <li>
+                                                <img src='".$row['CH_Image']."'>
+                                            </li>
+                                        ");
+                                    }
+                                    echo("
+                                            </ol>
+                                        </div>
+                                    ");
+                             
                                  while ($row = $selected_ad->fetch(PDO::FETCH_ASSOC)) {
                                     
                                     echo("
@@ -97,7 +87,7 @@
                                                 <div class='card-body'>
                                                     <div class='row'>
                                                         <div class='col'>
-                                                        <h6 class='card-title'>".$row["T_Annonce"]." en ".$row["Type_Annonce"]." de ".$row["Superficie"]." m²</h6></div>
+                                                        <h6 class='card-title'>".$row["T_Annonce"]." de ".$row["Superficie"]." m²</h6></div>
                                                         <div class='col d-flex justify-content-end'>
                                                             <!-- Button trigger modal -->
                                                                 <button type='button' class='btn btn-dark' data-bs-toggle='modal' data-bs-target='#exampleModal'>
@@ -138,7 +128,6 @@
            </div>
         
         </main>
-
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
         </script>

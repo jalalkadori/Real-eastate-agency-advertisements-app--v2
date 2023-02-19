@@ -81,14 +81,11 @@
             <section class="container mt-5" id="Annonce">
                 <h2>Liste des Annonces disponible : </h2>
                 <?php 
-                   
-                    displayCards($img_principale);
-
-                    // function img_pricipale($img) {
-                    //     while ($row = $img->fetch(PDO::FETCH_ASSOC)) {
-                    //         echo("");
-                    //     }
-                    // }
+                    if($row_count > 0) {
+                        displayCards($ad_img_principale);
+                    } else {
+                        echo "Pas d'annonces trouvées !";
+                    }
 
                     function displayCards($arrToBeDisplayed) {
                         echo "<div class='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5'>";
