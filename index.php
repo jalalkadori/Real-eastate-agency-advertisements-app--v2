@@ -34,7 +34,7 @@
                                     <a class="nav-link" href="#Annonce">Annonces</a>
                                 </li>  
                                 <li class="nav-item">
-                                    <a class="nav-link" href="./inscription.php">
+                                    <a class="nav-link m-1 " href="./inscription.php">
                                         <i class="fa-solid fa-user-plus"></i>
                                     </a>
                                 </li>  

@@ -1,4 +1,4 @@
-<?php include("./dbConnection.php"); ?>
+<?php include("./dbConnection.php"); error_reporting(E_ERROR | E_PARSE);?>
 
 <!doctype html>
 <html lang="en">
@@ -31,6 +31,11 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#Annonce">Annonces</a>
+                                </li>
+                                <li class="nav-item">
+                                    <form action="logout.php" class="nav-link m-0 p-0">
+                                        <button type='submit' class="btn btn-outline-light me-2">Logout</button>
+                                    </form>
                                 </li>
                                 <li class="nav-item">
                                     <a href="ajout.php" class="btn btn-outline-light"> + Ajouter une Annonce</a>
@@ -105,7 +110,63 @@
                     </div>
                 </div>
             </div>
+        <main class="container-fluid mt-5 pt-5">
+            <?php
+            session_start();
+
+            if(isset($_SESSION['email'])){
+                $email = $_SESSION['email'];
+                $sql = "SELECT * FROM annonces LEFT JOIN client ON client.N_Client = annonces.N_Client WHERE client.Email_client = '$email'";
+                $sql_response = $db_connection->prepare($sql);
+                $sql_response->execute();
+                $sql_result = $sql_response->fetchAll(PDO::FETCH_ASSOC);
+                $count = $sql_response->rowCount();                        
+
+                    for($c = 0; $c < $count; $c++){
+                        echo 
+                        "<div class='col mt-2'>
+                            <div class='card'>
+                                <img src='".$sql_result[$c]["CH_Image"]."' class='card-img-top'>
+                                <div class='card-body'>
+                                    <h6 class='card-title'>".$sql_result[$c]["T_Annonce"]." de ".$sql_result[$c]["Superficie"]." m²</h6>
+                                    <div class='d-flex justify-content-between align-items-center'>
+                                        <h5 class='text-danger fs-5'>".$sql_result[$c]["P_Annonce"]." DH</h5>
+                                    </div>
+                                    <p class='fs-6'>".$sql_result[$c]["A_Annonce"]." , ".$sql_result[$c]["Ville"]."</p>
+                                    <p class='fs-6'>Publié le ".$sql_result[$c]["Date_Pub"].".</p>
+                                    <a class='btn btn-dark w-100' href='./details.php?id=".$sql_result[$c]["N_Annonce"]."'>Voir Plus ...</a>
+                                </div>
+                            </div>
+                        </div>"       ;
+                    }
+
+                }else{
+                header('Location: connection.php');
+            }
+                  
+            
+            ?>
         </main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
