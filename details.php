@@ -11,6 +11,8 @@
         <link rel="stylesheet" href="style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <link rel="stylesheet" href="./slider/css/my-slider.css"/>
+        <script src="./slider/js/ism-2.2.min.js"></script>
     </head>
 
     <body>
@@ -39,8 +41,8 @@
         </header>
 
         <main class="container-fluid mt-5 pt-5">
-           <div class="container-fluid ">
-                <div class="container ">
+           <div class="container-fluid">
+                <div class="container d-flex justify-content-center">
                     <div class="row">
                         <div class="col">
                             <?php 
@@ -49,41 +51,43 @@
                                     $id= $_GET["id"];  
                                 }
 
-                                 $search_request = "SELECT * FROM `annonces` where `N_Annonce` = $id";
-                                 $search_results = $db_connection->prepare($search_request);
-                                 $search_results->execute();
+                                 $selected_ad_request = "SELECT * FROM `annonces` where `N_Annonce` = $id";
+                                 $selected_ad = $db_connection->prepare($selected_ad_request);
+                                 $selected_ad->execute();
 
-                                 while ($row = $search_results->fetch(PDO::FETCH_ASSOC)) {
+                                 $image_gallery_request = "SELECT * FROM `image` where `N_Annonce` = $id";
+                                 $image_gallery = $db_connection->prepare($image_gallery_request);
+                                 $image_gallery->execute();
+
+                              
+
+                                // <img src='".$row['CH_Image']."' class='d-block w-100'>
+                              
+                                    echo ("
+                                    <div class='ism-slider' data-transition_type='fade' id='img-gallery'>
+                                        <ol>
+                                        ");
+                                        while ($row = $image_gallery->fetch(PDO::FETCH_ASSOC)) {
+                                            echo ("
+                                            <li>
+                                                <img src='".$row['CH_Image']."'>
+                                            </li>
+                                        ");
+                                    }
                                     echo("
-                                        <div class='col-sm-8 mt-5'>
+                                            </ol>
+                                        </div>
+                                    ");
+                             
+                                 while ($row = $selected_ad->fetch(PDO::FETCH_ASSOC)) {
+                                    
+                                    echo("
+                                        <div class='mt-5'>
                                             <div class='card'>
-
-                                                <div id='carouselExampleAutoplaying' class='carousel slide' data-bs-ride='carousel'>
-                                                    <div class='carousel-inner'>
-                                                        <div class='carousel-item active'>
-                                                        <img src='' class='d-block w-100' alt='...'>
-                                                        </div>
-                                                        <div class='carousel-item'>
-                                                        <img src='...' class='d-block w-100' alt='...'>
-                                                        </div>
-                                                        <div class='carousel-item'>
-                                                        <img src='...' class='d-block w-100' alt='...'>
-                                                        </div>
-                                                    </div>
-                                                    <button class='carousel-control-prev' type='button' data-bs-target='#carouselExampleAutoplaying' data-bs-slide='prev'>
-                                                        <span class='carousel-control-prev-icon' aria-hidden='true'></span>
-                                                        <span class='visually-hidden'>Previous</span>
-                                                    </button>
-                                                    <button class='carousel-control-next' type='button' data-bs-target='#carouselExampleAutoplaying' data-bs-slide='next'>
-                                                        <span class='carousel-control-next-icon' aria-hidden='true'></span>
-                                                        <span class='visually-hidden'>Next</span>
-                                                    </button>
-                                                </div>
-
                                                 <div class='card-body'>
                                                     <div class='row'>
                                                         <div class='col'>
-                                                        <h6 class='card-title'>".$row["T_Annonce"]." en ".$row["Type_Annonce"]." de ".$row["Superficie"]." m²</h6></div>
+                                                        <h6 class='card-title'>".$row["T_Annonce"]." de ".$row["Superficie"]." m²</h6></div>
                                                         <div class='col d-flex justify-content-end'>
                                                             <!-- Button trigger modal -->
                                                                 <button type='button' class='btn btn-dark' data-bs-toggle='modal' data-bs-target='#exampleModal'>
@@ -94,12 +98,12 @@
                                                                 <div class='modal fade' id='exampleModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
                                                                 <div class='modal-dialog'>
                                                                     <div class='modal-content'>
-                                                                    <div class='modal-header'>
-                                                                        <button type='button' class='btn-close btn btn-light' data-bs-dismiss='modal' aria-label='Close'></button>
-                                                                    </div>
-                                                                    <div class='modal-body text-center'>
-                                                                        <p class='fs-2 text-danger' >+212 60102949570</p>                                                                    </div>
-                                                                    <div class='modal-footer'></div>
+                                                                        <div class='modal-header'>
+                                                                            <button type='button' class='btn-close btn btn-light' data-bs-dismiss='modal' aria-label='Close'></button>
+                                                                        </div>
+                                                                        <div class='modal-body text-center'>
+                                                                            <p class='fs-2 text-danger' >+212 60102949570</p>                                                                    
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                                 </div>
@@ -109,7 +113,7 @@
                                                     <div class='d-flex justify-content-between align-items-center'>
                                                         <h5 class='text-danger fs-5'>".$row["P_Annonce"]." DH</h5>
                                                     </div>
-                                                    <p class='fs-6'>".$row["A_Annonce"]."</p>
+                                                    <p class='fs-6'>".$row["A_Annonce"]." , ".$row["Ville"]."</p>
                                                     <p class='fs-6'>Publié le ".$row["Date_Pub"].".</p>                            
                                                 </div>
                                             </div>
@@ -124,7 +128,6 @@
            </div>
         
         </main>
-
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
         </script>

@@ -1,0 +1,43 @@
+CREATE DATABASE GA_Immobilier;
+USE GA_Immobilier;
+CREATE TABLE Annonces (
+N_Annonce INT(11) AUTO_INCREMENT PRIMARY KEY,
+T_Annonce VARCHAR(50),
+P_Annonce INT(11),
+Date_Pub DATE,
+Date_Modif DATE,
+A_Annonce VARCHAR(50),
+C_Annonce VARCHAR(10),
+Type_Annonce VARCHAR(10),
+N_Client INT(10)
+);
+
+USE GA_Immobilier;
+CREATE TABLE Client(
+N_Client INT(10) AUTO_INCREMENT PRIMARY KEY,
+Nom_Client VARCHAR(15),
+Prénom_Client VARCHAR(15),
+Email_client VARCHAR(30),
+mot_passe VARCHAR(16),
+N_téléphone INT(10)
+);
+ALTER TABLE annonces
+ADD FOREIGN KEY (N_Client) REFERENCES client(N_Client);
+
+USE GA_Immobilier;
+CREATE TABLE Image (
+ID_Image INT(10) AUTO_INCREMENT PRIMARY KEY,
+CH_Image VARCHAR(15),
+IMG_Principal BOOLEAN,
+N_Annonce INT(11)
+);
+ALTER TABLE image
+ADD FOREIGN KEY (N_Annonce) REFERENCES annonces(N_Annonce);
+
+// adding content to image table : 
+INSERT INTO image
+VALUES 
+(null, './images/app1.jpeg', oui, 1),
+(null, './images/app1-2.jpeg', non, 1),
+(null, './images/maison-2.jpeg', non, 1),
+(null, './images/maison.jpeg', non, 1);

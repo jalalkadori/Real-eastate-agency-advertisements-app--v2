@@ -81,14 +81,11 @@
             <section class="container mt-5" id="Annonce">
                 <h2>Liste des Annonces disponible : </h2>
                 <?php 
-                   
-                    displayCards($img_principale);
-
-                    // function img_pricipale($img) {
-                    //     while ($row = $img->fetch(PDO::FETCH_ASSOC)) {
-                    //         echo("");
-                    //     }
-                    // }
+                    if($row_count > 0) {
+                        displayCards($ad_img_principale);
+                    } else {
+                        echo "Pas d'annonces trouvées !";
+                    }
 
                     function displayCards($arrToBeDisplayed) {
                         echo "<div class='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5'>";
@@ -102,7 +99,7 @@
                                             <div class='d-flex justify-content-between align-items-center'>
                                                 <h5 class='text-danger fs-5'>".$row["P_Annonce"]." DH</h5>
                                             </div>
-                                            <p class='fs-6'>".$row["A_Annonce"]."</p>
+                                            <p class='fs-6'>".$row["A_Annonce"]." , ".$row["Ville"]."</p>
                                             <p class='fs-6'>Publié le ".$row["Date_Pub"].".</p>
                                             <a class='btn btn-dark w-100' href='./details.php?id=".$row["N_Annonce"]."'>Voir Plus ...</a>
                                         </div>
