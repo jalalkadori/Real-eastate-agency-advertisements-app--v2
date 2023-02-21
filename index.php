@@ -59,7 +59,7 @@
                     </div>
                     <div class="col">
                         <h5 for="type">Ville</h5>
-                        <select class="form-select" aria-label="type" name="categorie">
+                        <select class="form-select" aria-label="type" name="ville">
                             <option></option>
                             <option value="Location">Tanger</option>
                             <option value="Vente">Casablanca</option>
@@ -82,10 +82,35 @@
                 <h2>Liste des Annonces disponible : </h2>
                 <?php 
                     if($row_count > 0) {
-                        displayCards($ad_img_principale);
+                        if(isset($_POST['chercher'])) {
+                            $categorie = $_POST["categorie"];
+                            $ville = $_POST["ville"];
+                            $min_price = $_POST["Min"];
+                            $max_price = $_POST["Max"];
+                            // all input are full
+                            if(!empty($ville)) {
+                                $search_request = "SELECT * FROM `annonces` RIGHT JOIN `image` ON annonces.N_Annonce = image.N_Annonce WHERE image.IMG_Principal='oui'
+                                  AND ``annonces.Ville` = '$ville'";
+                                $search_results = $db_connection->prepare($search_request);
+                                $search_results->execute();
+                                displayCards($search_results);  
+                            } else {
+                                echo "Aucune annonce trouvée !";
+                                echo $categorie;
+                            }
+                            
+                        } else {
+                            displayCards($ad_img_principale);
+                        }
                     } else {
                         echo "Pas d'annonces trouvées !";
                     }
+
+
+
+
+
+
 
                     function displayCards($arrToBeDisplayed) {
                         echo "<div class='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5'>";

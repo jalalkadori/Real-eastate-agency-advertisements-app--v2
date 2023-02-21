@@ -42,8 +42,69 @@
             </div>
         </header>
 
-        <main class="container-fluid pt-5">
+        <main class="container-fluid pt-5 mt-5">
+            <div class="container-fluid pt-5 mt-5">
+                <div class="container">
+                    <div class="row gap-1">
+                        <div class="col">
+                            <?php 
+                                if($row_count > 0) {
+                                    displayCards($ad_img_principale);
+                                } else {
+                                    echo "Pas d'annonces trouvées !";
+                                }
             
+                                function displayCards($arrToBeDisplayed) {
+                                    echo "<div class='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4'>";
+                                    while ($row = $arrToBeDisplayed->fetch(PDO::FETCH_ASSOC)) {
+                                        echo("
+                                            <div class='col-7'>
+                                                <div class='card'>
+                                                    <img src='".$row["CH_Image"]."' class='card-img-top'>
+                                                    <div class='card-body'>
+                                                        <h6 class='card-title'>".$row["T_Annonce"]." de ".$row["Superficie"]." m²</h6>
+                                                        <div class='d-flex justify-content-between align-items-center'>
+                                                            <h5 class='text-danger fs-5'>".$row["P_Annonce"]." DH</h5>
+                                                        </div>
+                                                        <p class='fs-6'>".$row["A_Annonce"]." , ".$row["Ville"]."</p>
+                                                        <p class='fs-6'>Publié le ".$row["Date_Pub"].".</p>
+                                                        <a class='btn btn-dark w-100' href='./details.php?id=".$row["N_Annonce"]."'>Voir Plus ...</a>
+                                                        <div class='d-flex justify-content-between align-items-center mt-1'>
+                                                            <a class='btn btn-danger' href='./details.php?id=".$row["N_Annonce"]."'>Supprimer</a>
+                                                            <a class='btn btn-success' href='./details.php?id=".$row["N_Annonce"]."'>Modifer</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>"
+            
+                                        );
+                                    } 
+                                    echo "</div>";
+                                }
+                                    
+                                    ?>
+                        </div>
+                                <?php 
+                                    echo("
+                                    
+                                        <div class='col-3'>
+                                            <div class='card'>
+                                                <div class='card-body'>
+                                                    <h5 class='card-title'>Informations Personnels</h5>
+                                                    <h6 class='card-subtitle mb-2 text-muted'>Nom et pronom</h6>
+                                                    <p class='card-text'>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                                    <a href='#' class='card-link'>Card link</a>
+                                                    <a href='#' class='card-link'>Another link</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ");
+                                ?>
+                            
+                        
+                    </div>
+                </div>
+            </div>
         </main>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
