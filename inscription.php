@@ -41,29 +41,46 @@
         <br>
 
         <?php
+        $fname = $_POST['fname'];
+        $lname = $_POST['lname'];
+        $email = $_POST['email'];
+        $tel = $_POST['tel'];
+
+        $check_email = "SELECT Email_client FROM client";
+        $check_response = $db_connection->prepare($check_email);
+        $check_response->execute();
+        $check_email_response = $check_response->fetchAll( PDO::FETCH_ASSOC );
+        $email = str_replace(" ", "", $email);
+        for($i=0; $i < $check_response->rowCount(); $i++){
+            if(preg_match("/$email/i", $check_email_response[$i]['Email_client'])){
+                $exist = true;
+            }
+        }
+
+
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if(isset($_POST['btn'])){    
             
-            if(strlen($_POST['lname']) > 15){
-                $error_lname = 'Your Name length is more than 15!';
+            if(strlen($_POST['lname']) > 15 or strlen($_POST['lname']) == 0){
+                $error_lname = 'Your First Name must not be empty and over 15 characters!';
             }
             elseif(preg_match_all("/[&<>\|`_@}{()@~'!§£=€]/", $_POST['lname'])){
                 $error_lname = 'Your First Name must not contain special characters!';
             }        
             elseif(strlen($_POST['fname']) > 15){
-                $error_fname = 'Your Last Name length is more than 15!';
+                $error_fname = 'Your Last Name must not be empty and over 15 characters!';
             }
             elseif(preg_match_all("/[&<>\|`_@}{()@~'!§£=€]/", $_POST['fname'])){
                 $error_fname = 'Your Last Name must not contain special characters!';
-            }
-            elseif(strlen($_POST['tel']) > 10){
-                $error_tel = 'Your Phone Number length is more than 10!';
             }
             elseif(strlen($_POST['tel']) !== 10){
                 $error_tel = 'Your Phone Number must contain 10 numbers!';
             }        
             elseif(strlen($_POST['email']) > 30){
                 $error_email = 'Your Email length is more than 30!';
+            }
+            elseif($exist){
+                $error_email = 'This email is already exist';
             }
             elseif(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
                 $error_email = 'Your Email is not valid!';
@@ -83,25 +100,18 @@
                 $error_re_password = 'Your Passwords doesnt match!';
             }
             else{
-                $fname = $_POST['fname'];
-                $lname = $_POST['lname'];
-                $email = $_POST['email'];
-                $tel = $_POST['tel'];
-                $password = password_hash(isset($_POST['lname']), PASSWORD_DEFAULT);
-                $Inser_client_data = "INSERT INTO client (N_Client,Nom_Client,Prénom_Client,Email_client,mot_passe,N_téléphone) VALUES(NULL, '$lname','$fname','$tel','$password',' $tel')";
+                $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                $Inser_client_data = "INSERT INTO client (N_Client,Nom_Client,Prénom_Client,Email_client,N_téléphone,pass) VALUES(NULL, '$lname','$fname','$email',' $tel','$password')";
                 $send_data = $db_connection->prepare($Inser_client_data);
                 $send_data->execute();
-                header('Location: profil.php');
+                header('Location: connection.php');
+                session_start();
+                $_SESSION['email'] = $_POST['email'];
+                $_SESSION['password'] = $_POST['password'];
             }   
         }
 
     }
-
-
-
-
-
-
 
             // $sql = "SELECT mot_passe FROM client where N_Client = 36";
             // $sqlresponse = $db_connection->prepare($sql);
@@ -151,15 +161,15 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputPassword1" class="form-label">Password</label>
-                                    <input type="password" class="form-control" name="password" >                                    
+                                    <input type="password" class="form-control" name="password" value="<?= $_POST['password'] ?>">                                    
                                     <span class="text-danger"><?= $error_password ?></span>
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputPassword1" class="form-label">Confirmée le mot de passe</label>
-                                    <input type="password" class="form-control" name="rewrite_password">                                    
+                                    <input type="password" class="form-control" name="rewrite_password" value="<?= $_POST['rewrite_password'] ?>">                                    
                                     <span class="text-danger"><?= $error_re_password ?></span>
                                 </div>                            
-                                <button type="submit" class="btn btn-dark w-100">Creer votre compte</button>
+                                <button type="submit" name='btn' class="btn btn-dark w-100">créer votre compte</button>
                             </form>
                         </div>
                         </div>
@@ -167,19 +177,6 @@
                 </div>
             </div>
         </main>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

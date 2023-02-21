@@ -12,7 +12,7 @@
     </head>
 
     <body>
-        <header class="container-fluid bg-dark fixed-top mb-1">
+        <!-- <header class="container-fluid bg-dark fixed-top mb-1">
             <div class="container">
                 <nav class="navbar navbar-expand-lg navbar-dark py-2">
                     <div class="container-fluid">
@@ -33,6 +33,11 @@
                                     <a class="nav-link" href="#Annonce">Annonces</a>
                                 </li>
                                 <li class="nav-item">
+                                    <form action="logout.php" class="nav-link m-0 p-0">
+                                        <button type='submit' class="btn btn-outline-light me-2">Logout</button>
+                                    </form>
+                                </li>
+                                <li class="nav-item">
                                     <a href="ajout.php" class="btn btn-outline-light"> + Ajouter une Annonce</a>
                                 </li>
                             </ul>
@@ -40,11 +45,39 @@
                     </div>
                 </nav>
             </div>
-        </header>
+        </header> -->
 
         <main class="container-fluid pt-5">
+            <?php 
+            session_start();
+            $email = $_SESSION['email'];
+            $sql = "SELECT * FROM annonces ";
+            $sql_response = $db_connection->prepare($sql);
+            $sql_response->execute();
+                  
             
+            ?>
         </main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
