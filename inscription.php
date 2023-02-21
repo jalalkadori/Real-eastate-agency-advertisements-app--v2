@@ -1,4 +1,4 @@
-<?php include("./dbConnection.php"); ?>
+<?php include("./dbConnection.php"); error_reporting(E_ERROR | E_PARSE);?>
 <!doctype html>
 <html lang="en">
     <head>
@@ -39,34 +39,126 @@
             </div>
         </header>
         <br>
-        <main class="mt-5 pt-5">
+
+        <?php
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if(isset($_POST['btn'])){    
+            
+            if(strlen($_POST['lname']) > 15){
+                $error_lname = 'Your Name length is more than 15!';
+            }
+            elseif(preg_match_all("/[&<>\|`_@}{()@~'!§£=€]/", $_POST['lname'])){
+                $error_lname = 'Your First Name must not contain special characters!';
+            }        
+            elseif(strlen($_POST['fname']) > 15){
+                $error_fname = 'Your Last Name length is more than 15!';
+            }
+            elseif(preg_match_all("/[&<>\|`_@}{()@~'!§£=€]/", $_POST['fname'])){
+                $error_fname = 'Your Last Name must not contain special characters!';
+            }
+            elseif(strlen($_POST['tel']) > 10){
+                $error_tel = 'Your Phone Number length is more than 10!';
+            }
+            elseif(strlen($_POST['tel']) !== 10){
+                $error_tel = 'Your Phone Number must contain 10 numbers!';
+            }        
+            elseif(strlen($_POST['email']) > 30){
+                $error_email = 'Your Email length is more than 30!';
+            }
+            elseif(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
+                $error_email = 'Your Email is not valid!';
+            }        
+            elseif(strlen($_POST['password']) > 16 || strlen($_POST['password']) < 8){
+                $error_password = 'Your Password length must be between 8 and 16 characters!';
+            }
+            elseif(!preg_match_all("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[&$#!§:;.?+=@]).{8,}$/", $_POST['password'])){
+                $error_password = 'Your Password is not Strong!' ."<br>" . 
+                '<ul>
+                    <li>Your password must contain Alphabetics</li>
+                    <li>Your password must contain Numbers</li>
+                    <li>Your password must contain Special characters like (&@_{# ect..)</li>
+                </ul>';
+            }
+            elseif($_POST['password'] !== $_POST['rewrite_password']){
+                $error_re_password = 'Your Passwords doesnt match!';
+            }
+            else{
+                $fname = $_POST['fname'];
+                $lname = $_POST['lname'];
+                $email = $_POST['email'];
+                $tel = $_POST['tel'];
+                $password = password_hash(isset($_POST['lname']), PASSWORD_DEFAULT);
+                $Inser_client_data = "INSERT INTO client (N_Client,Nom_Client,Prénom_Client,Email_client,mot_passe,N_téléphone) VALUES(NULL, '$lname','$fname','$tel','$password',' $tel')";
+                $send_data = $db_connection->prepare($Inser_client_data);
+                $send_data->execute();
+                header('Location: profil.php');
+            }   
+        }
+
+    }
+
+
+
+
+
+
+
+            // $sql = "SELECT mot_passe FROM client where N_Client = 36";
+            // $sqlresponse = $db_connection->prepare($sql);
+            // $sqlresponse->execute();
+            // $sqlresult = $sqlresponse->fetch( PDO::FETCH_ASSOC );
+
+            // if (password_verify($password, $sqlresult['mot_passe'])) {
+            //     echo 'Password is valid!';
+            // } else {
+            //     echo 'Invalid password.';
+            // }
+
+
+        ?>
+
+
+
+
+
+        <main class="signupbox mt-5 pt-5">
             <div class="container-fluid pt-5">
                 <div class="row">
                     <div class="col d-flex justify-content-center">
                     <div class="card" style="width: 20rem;">
                         <div class="card-body">
-                            <form class=" ">
+                            <form method='POST' action=''>
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Nom :</label>
-                                    <input type="text" class="form-control">
+                                    <label for="exampleInputEmail1" class="form-label">Nom</label>
+                                    <input type="text" class="form-control" name="lname" value="<?= $_POST['lname'] ?>">
+                                    <span class="text-danger"><?= $error_lname ?></span>
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Prénom</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="fname" value="<?= $_POST['fname'] ?>">
+                                    <span class="text-danger"><?= $error_fname ?></span>
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Numero de telephone</label>
-                                    <input type="tel" class="form-control">
+                                    <input type="tel" class="form-control" name="tel" value="<?= $_POST['tel'] ?>">                                    
+                                    <span class="text-danger"><?= $error_tel ?></span>
+
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Email address</label>
-                                    <input type="email" class="form-control">
+                                    <input type="email" class="form-control" name="email" value="<?= $_POST['email'] ?>">                                    
+                                    <span class="text-danger"><?= $error_email ?></span>
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputPassword1" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1">
+                                    <input type="password" class="form-control" name="password" >                                    
+                                    <span class="text-danger"><?= $error_password ?></span>
                                 </div>
-                            
+                                <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Confirmée le mot de passe</label>
+                                    <input type="password" class="form-control" name="rewrite_password">                                    
+                                    <span class="text-danger"><?= $error_re_password ?></span>
+                                </div>                            
                                 <button type="submit" class="btn btn-dark w-100">Creer votre compte</button>
                             </form>
                         </div>
@@ -75,31 +167,6 @@
                 </div>
             </div>
         </main>
-
-        <form action='' method ='Post' class='mt-5  pt-5'>
-            <button type='submit' name='btn'>create password</button>
-        </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <main class="container-fluid mt-5 pt-5">
-            
-        </main>
-
-
-
 
 
 
