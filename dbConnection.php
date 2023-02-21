@@ -10,7 +10,8 @@
                 $ad_img_principale_request = "SELECT * FROM `annonces` RIGHT JOIN `image` ON annonces.N_Annonce = image.N_Annonce WHERE image.IMG_Principal='oui'";
                 $ad_img_principale = $db_connection->prepare($ad_img_principale_request);
                 $ad_img_principale->execute();
-                $row_count = $ad_img_principale->rowCount();
+                // $row_count = $ad_img_principale->rowCount();
+                $row_count = 1;
             }
             catch(PDOException $e){
               echo 'Erreur : ' . $e->getMessage();
