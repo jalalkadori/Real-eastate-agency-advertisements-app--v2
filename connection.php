@@ -48,8 +48,8 @@
             if(isset($_POST['btn'])){
                 $email = $_POST['email'];
 
-                $sql = "SELECT N_Client, Email_client, pass FROM client WHERE Email_client = '$email'";
-                $sqlresponse = $db_connection->prepare($sql);
+                $sql_check = "SELECT N_Client, Email_client, pass FROM client WHERE Email_client = '$email'";
+                $sqlresponse = $db_connection->prepare($sql_check);
                 $sqlresponse->execute();
                 $sqlresult = $sqlresponse->fetch( PDO::FETCH_ASSOC );
                 $count = $sqlresponse->rowCount();
@@ -70,13 +70,6 @@
 
             }
         }
-
-
-
-
-
-
-
         ?>
 
 

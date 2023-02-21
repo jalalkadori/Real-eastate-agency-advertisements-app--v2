@@ -112,20 +112,7 @@
         }
 
     }
-
-            // $sql = "SELECT mot_passe FROM client where N_Client = 36";
-            // $sqlresponse = $db_connection->prepare($sql);
-            // $sqlresponse->execute();
-            // $sqlresult = $sqlresponse->fetch( PDO::FETCH_ASSOC );
-
-            // if (password_verify($password, $sqlresult['mot_passe'])) {
-            //     echo 'Password is valid!';
-            // } else {
-            //     echo 'Invalid password.';
-            // }
-
-
-        ?>
+?>
 
 
 

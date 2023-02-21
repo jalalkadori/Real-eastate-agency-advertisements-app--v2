@@ -1,4 +1,4 @@
-<?php include("./dbConnection.php"); ?>
+<?php include("./dbConnection.php"); error_reporting(E_ERROR | E_PARSE);?>
 
 <!doctype html>
 <html lang="en">
@@ -12,7 +12,7 @@
     </head>
 
     <body>
-        <!-- <header class="container-fluid bg-dark fixed-top mb-1">
+        <header class="container-fluid bg-dark fixed-top mb-1">
             <div class="container">
                 <nav class="navbar navbar-expand-lg navbar-dark py-2">
                     <div class="container-fluid">
@@ -45,15 +45,41 @@
                     </div>
                 </nav>
             </div>
-        </header> -->
+        </header>
 
-        <main class="container-fluid pt-5">
-            <?php 
+        <main class="container-fluid mt-5 pt-5">
+            <?php
             session_start();
-            $email = $_SESSION['email'];
-            $sql = "SELECT * FROM annonces ";
-            $sql_response = $db_connection->prepare($sql);
-            $sql_response->execute();
+
+            if(isset($_SESSION['email'])){
+                $email = $_SESSION['email'];
+                $sql = "SELECT * FROM annonces LEFT JOIN client ON client.N_Client = annonces.N_Client WHERE client.Email_client = '$email'";
+                $sql_response = $db_connection->prepare($sql);
+                $sql_response->execute();
+                $sql_result = $sql_response->fetchAll(PDO::FETCH_ASSOC);
+                $count = $sql_response->rowCount();                        
+
+                    for($c = 0; $c < $count; $c++){
+                        echo 
+                        "<div class='col mt-2'>
+                            <div class='card'>
+                                <img src='".$sql_result[$c]["CH_Image"]."' class='card-img-top'>
+                                <div class='card-body'>
+                                    <h6 class='card-title'>".$sql_result[$c]["T_Annonce"]." de ".$sql_result[$c]["Superficie"]." m²</h6>
+                                    <div class='d-flex justify-content-between align-items-center'>
+                                        <h5 class='text-danger fs-5'>".$sql_result[$c]["P_Annonce"]." DH</h5>
+                                    </div>
+                                    <p class='fs-6'>".$sql_result[$c]["A_Annonce"]." , ".$sql_result[$c]["Ville"]."</p>
+                                    <p class='fs-6'>Publié le ".$sql_result[$c]["Date_Pub"].".</p>
+                                    <a class='btn btn-dark w-100' href='./details.php?id=".$sql_result[$c]["N_Annonce"]."'>Voir Plus ...</a>
+                                </div>
+                            </div>
+                        </div>"       ;
+                    }
+
+                }else{
+                header('Location: connection.php');
+            }
                   
             
             ?>
