@@ -64,9 +64,6 @@
                             $sql_response->execute();
                             $sql_result = $sql_response->fetchAll(PDO::FETCH_ASSOC);
                             $count = $sql_response->rowCount();
-                            $_SESSION['fname'] = $sql_result[0]['Prénom_Client'];
-                            $_SESSION['lname'] = $sql_result[0]['Nom_Client'];
-                            $_SESSION['tel'] = '0'.$sql_result[0]['N_téléphone'];
                             
                     echo "<div class='col-6 m-3'>";
                     echo "<div class='row row-cols-2'>";
@@ -100,9 +97,13 @@
                                 $sql_info_response = $db_connection->prepare($sql_info);
                                 $sql_info_response->execute();
                                 $sql_info_result = $sql_info_response->fetchAll(PDO::FETCH_ASSOC);
-                                $count = $sql_info_response->rowCount();                    
+                                $count = $sql_info_response->rowCount();    
+                                $_SESSION['fname'] = $sql_info_result[0]['Prénom_Client'];
+                                $_SESSION['lname'] = $sql_info_result[0]['Nom_Client'];
+                                $_SESSION['tel'] = '0'.$sql_info_result[0]['N_téléphone'];
+                    
                                 echo("
-                    <div class='col-3 m-3'>
+                                    <div class='col-3 m-3'>
                                     <div class='card'>
                                         <div class='card-body'>
                                             <h5 class='card-title'>Informations Personnels:</h5>
