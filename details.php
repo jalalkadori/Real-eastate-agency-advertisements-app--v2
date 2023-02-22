@@ -42,7 +42,7 @@
 
         <main class="container-fluid mt-5 pt-5">
            <div class="container-fluid">
-                <div class="container d-flex justify-content-center">
+                <div class="container">
                     <div class="row">
                         <div class="col">
                             <?php 
@@ -51,17 +51,13 @@
                                     $id= $_GET["id"];  
                                 }
 
-                                 $selected_ad_request = "SELECT * FROM `annonces` where `N_Annonce` = $id";
+                                 $selected_ad_request = "SELECT * FROM `annonces` INNER JOIN `client` ON annonces.N_Client = client.N_Client WHERE annonces.N_Annonce = $id";
                                  $selected_ad = $db_connection->prepare($selected_ad_request);
                                  $selected_ad->execute();
 
                                  $image_gallery_request = "SELECT * FROM `image` where `N_Annonce` = $id";
                                  $image_gallery = $db_connection->prepare($image_gallery_request);
                                  $image_gallery->execute();
-
-                              
-
-                                // <img src='".$row['CH_Image']."' class='d-block w-100'>
                               
                                     echo ("
                                     <div class='ism-slider' data-transition_type='fade' id='img-gallery'>
@@ -102,7 +98,7 @@
                                                                             <button type='button' class='btn-close btn btn-light' data-bs-dismiss='modal' aria-label='Close'></button>
                                                                         </div>
                                                                         <div class='modal-body text-center'>
-                                                                            <p class='fs-2 text-danger' >+212 60102949570</p>                                                                    
+                                                                            <p class='fs-2 text-danger' >+212 ".$row["N_téléphone"]."</p>                                                                    
                                                                         </div>
                                                                     </div>
                                                                 </div>
