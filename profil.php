@@ -51,79 +51,91 @@
         </header>
 
 
-<main class="container-fluid mt-5 pt-5 d-flex flex-wrap">
-<?php
+        <main class="container-fluid mt-5 pt-5">
+            <div class="container">
+                <div class="row d-flex justify-content-between">
+                    <?php
 
-            if(isset($_SESSION['email'])){
-                $email = $_SESSION['email'];
-                $N_Client = $_SESSION['N_Client'];
-                $sql = "SELECT * FROM annonces WHERE annonces.N_Client = '$N_Client'";
-                $sql_response = $db_connection->prepare($sql);
-                $sql_response->execute();
-                $sql_result = $sql_response->fetchAll(PDO::FETCH_ASSOC);
-                $count = $sql_response->rowCount();
-                $_SESSION['fname'] = $sql_result[0]['Prénom_Client'];
-                $_SESSION['lname'] = $sql_result[0]['Nom_Client'];
-                $_SESSION['tel'] = '0'.$sql_result[0]['N_téléphone'];
-                ;
-                    for($c = 0; $c < $count; $c++){
-                        echo 
-                        "<div class='m-3'>
-                            <div class='card'>
-                                <img src='".$sql_result[$c]["CH_Image"]."' class='card-img-top'>
-                                <div class='card-body'>
-                                    <h6 class='card-title'>".$sql_result[$c]["T_Annonce"]." de ".$sql_result[$c]["Superficie"]." m²</h6>
-                                    <div class='d-flex justify-content-between align-items-center'>
-                                        <h5 class='text-danger fs-5'>".$sql_result[$c]["P_Annonce"]." DH</h5>
-                                    </div>
-                                    <p class='fs-6'>".$sql_result[$c]["A_Annonce"]." , ".$sql_result[$c]["Ville"]."</p>
-                                    <p class='fs-6'>Publié le ".$sql_result[$c]["Date_Pub"].".</p>
-                                    <a class='btn btn-dark w-100' href='./details.php?id=".$sql_result[$c]["N_Annonce"]."'>Voir Plus ...</a>
-                                    <div class='d-flex justify-content-between align-items-center mt-1'>
-                                        <a class='btn btn-danger' href='./details.php?id=".$sql_result[$c]["N_Annonce"]."'>Supprimer</a>
-                                        <a class='btn btn-success' href='./details.php?id=".$sql_result[$c]["N_Annonce"]."'>Modifer</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>";
-                    }
-                    $sql_info = "SELECT Nom_Client, Prénom_Client, Email_client, N_téléphone FROM client WHERE client.N_Client = '$N_Client'";
-                    $sql_info_response = $db_connection->prepare($sql_info);
-                    $sql_info_response->execute();
-                    $sql_info_result = $sql_info_response->fetchAll(PDO::FETCH_ASSOC);
-                    $count = $sql_info_response->rowCount();                    
-                    echo("
-                    <div class='col-3 m-3'>
-                        <div class='card'>
-                            <div class='card-body'>
-                                <h5 class='card-title'>Informations Personnels:</h5>
-                                <h6 class='card-subtitle mb-2 text-muted'>Name: ".$sql_info_result[0]['Nom_Client'] . ' '. $sql_info_result[0]['Prénom_Client']."</h6>
-                                <h6 class='card-subtitle mb-2 text-muted'>Email: ".$sql_info_result[0]['Email_client']."</h6>
-                                <h6 class='card-subtitle mb-2 text-muted'>Télé: +212".$sql_info_result[0]['N_téléphone']."</h6>
-                                <div class='d-flex flex-wrap justify-content-center m-2'>
-                                    <form class='m-1 ps-5 pe-5' action='modifier_compte.php'>
-                                        <button type='submit' class='btn btn-success'>Modifier les informations Personnels</button>
-                                    </form>
-                                    <form class='m-1 ps-5 pe-5' action='modifier_pass.php'>
-                                        <button type='submit' class='btn btn-success '>Modifier le mot de passe</button>
-                                    </form>
-                                    <form class='m-1 ps-5 pe-5' action='delete_account.php'>
-                                        <button type='submit' class='btn btn-danger'>Supprimer le compte</button>
-                                    </form>
-                                </div>
+                        if(isset($_SESSION['email'])){
+                            $email = $_SESSION['email'];
+                            $N_Client = $_SESSION['N_Client'];
+                            $sql = "SELECT * FROM annonces INNER JOIN image on annonces.N_Annonce = image.N_Annonce WHERE annonces.N_Client = '$N_Client' AND image.IMG_Principal = 'oui'";
+                            $sql_response = $db_connection->prepare($sql);
+                            $sql_response->execute();
+                            $sql_result = $sql_response->fetchAll(PDO::FETCH_ASSOC);
+                            $count = $sql_response->rowCount();
+                            $_SESSION['fname'] = $sql_result[0]['Prénom_Client'];
+                            $_SESSION['lname'] = $sql_result[0]['Nom_Client'];
+                            $_SESSION['tel'] = '0'.$sql_result[0]['N_téléphone'];
                             
-                            </div>
-                        </div>
+                    echo "<div class='col-6 m-3'>";
+                    echo "<div class='row row-cols-2'>";
+                                for($c = 0; $c < $count; $c++){
+                                    echo ("
+
+                                        <div class='col '>
+                                            <div class='card'>
+                                                <img src='".$sql_result[$c]["CH_Image"]."' class='card-img-top'>
+                                                <div class='card-body'>
+                                                    <h6 class='card-title'>".$sql_result[$c]["T_Annonce"]." de ".$sql_result[$c]["Superficie"]." m²</h6>
+                                                    <div class='d-flex justify-content-between align-items-center'>
+                                                        <h5 class='text-danger fs-5'>".$sql_result[$c]["P_Annonce"]." DH</h5>
+                                                    </div>
+                                                    <p class='fs-6'>".$sql_result[$c]["A_Annonce"]." , ".$sql_result[$c]["Ville"]."</p>
+                                                    <p class='fs-6'>Publié le ".$sql_result[$c]["Date_Pub"].".</p>
+                                                    <a class='btn btn-dark w-100' href='./details.php?id=".$sql_result[$c]["N_Annonce"]."'>Voir Plus ...</a>
+                                                    <div class='d-flex justify-content-between align-items-center mt-1'>
+                                                        <a class='btn btn-danger' href='./details.php?id=".$sql_result[$c]["N_Annonce"]."'>Supprimer</a>
+                                                        <a class='btn btn-success' href='./details.php?id=".$sql_result[$c]["N_Annonce"]."'>Modifer</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ");
+                                }
+
+                    echo "</div>";
+                    echo "</div>";
+                                $sql_info = "SELECT Nom_Client, Prénom_Client, Email_client, N_téléphone FROM client WHERE client.N_Client = '$N_Client'";
+                                $sql_info_response = $db_connection->prepare($sql_info);
+                                $sql_info_response->execute();
+                                $sql_info_result = $sql_info_response->fetchAll(PDO::FETCH_ASSOC);
+                                $count = $sql_info_response->rowCount();                    
+                                echo("
+                    <div class='col-3 m-3'>
+                                    <div class='card'>
+                                        <div class='card-body'>
+                                            <h5 class='card-title'>Informations Personnels:</h5>
+                                            <h6 class='card-subtitle mb-2 text-muted'>Name: ".$sql_info_result[0]['Nom_Client'] . ' '. $sql_info_result[0]['Prénom_Client']."</h6>
+                                            <h6 class='card-subtitle mb-2 text-muted'>Email: ".$sql_info_result[0]['Email_client']."</h6>
+                                            <h6 class='card-subtitle mb-2 text-muted'>Télé: +212".$sql_info_result[0]['N_téléphone']."</h6>
+                                            <div class=''>
+                                            
+                                            <button type='submit' class='btn btn-success my-1 w-100'>Modifier vos informations Personnels</button>
+                                            <button type='submit' class='btn btn-success w-100'>Modifier le mot de passe</button>
+                                            <button type='submit' class='btn btn-danger my-1 w-100'>Supprimer le compte</button>
+                                                <form class='my-1 w-100' action='modifier_compte.php'>
+                                                </form>
+                                                <form class='my-1 w-100' action='modifier_pass.php'>
+                                                </form>
+                                                <form class='my-1 w-100' action='delete_account.php'>
+                                                </form>
+                                            </div>
+                                        
+                                        </div>
+                                    </div>
                     </div>
-                ");
-    
-            }
-            else{
-                header('Location: connection.php');
-            }
-            
-            ?>
-</main>
+                            ");
+                
+                        }
+                        else{
+                            header('Location: connection.php');
+                        }
+                        
+                    ?>
+                </div>
+            </div>
+        </main>
 
 
 

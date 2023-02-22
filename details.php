@@ -1,5 +1,5 @@
 <?php include("./dbConnection.php"); 
-
+session_start();
 ?>
 
 <!doctype html>
@@ -12,6 +12,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
         <link rel="stylesheet" href="./slider/css/my-slider.css"/>
+        <script src="https://kit.fontawesome.com/75c6b1327b.js" crossorigin="anonymous"></script>
         <script src="./slider/js/ism-2.2.min.js"></script>
     </head>
 
@@ -33,6 +34,35 @@
                                 <li class="nav-item">
                                     <a href="index.php" class="nav-link active" aria-current="page">Home</a>
                                 </li>
+
+                                <?php 
+                                    if(isset($_SESSION['email'])) {
+                                        echo ("
+                                        <li class='nav-item'>
+                                            <form action='logout.php' class='nav-link m-0 p-0'>
+                                                <button type='submit' class='btn btn-outline-light me-2'>Logout</button>
+                                            </form>
+                                        </li>
+                                        <li class='nav-item'>
+                                            <form action='profil.php' class='nav-link m-0 p-0'>
+                                                <button type='submit' class='btn btn-outline-light me-2'>Mon Profil</button>
+                                            </form>
+                                        </li>
+                                        
+                                        ");
+
+                                    } else {
+                                        echo ("
+                                        <li class='nav-item'>
+                                            <a class='nav-link m-1 ' href='./inscription.php'>
+                                                <i class='fa-solid fa-user-plus'></i>
+                                            </a>
+                                        </li>
+                                        
+                                        ");
+                                    }
+
+                                ?> 
                             </ul>
                         </div>
                     </div>

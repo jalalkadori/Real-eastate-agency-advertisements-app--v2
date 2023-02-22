@@ -1,4 +1,4 @@
-<?php include("./dbConnection.php"); ?>
+<?php include("./dbConnection.php"); session_start()?>
 
 <!doctype html>
 <html lang="en">
@@ -32,12 +32,36 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#Annonce">Annonces</a>
-                                </li>  
-                                <li class="nav-item">
-                                    <a class="nav-link m-1 " href="./inscription.php">
-                                        <i class="fa-solid fa-user-plus"></i>
-                                    </a>
-                                </li>  
+                                </li> 
+                                <?php 
+                                    if(isset($_SESSION['email'])) {
+                                        echo ("
+                                        <li class='nav-item'>
+                                            <form action='logout.php' class='nav-link m-0 p-0'>
+                                                <button type='submit' class='btn btn-outline-light me-2'>Logout</button>
+                                            </form>
+                                        </li>
+                                        <li class='nav-item'>
+                                            <form action='profil.php' class='nav-link m-0 p-0'>
+                                                <button type='submit' class='btn btn-outline-light me-2'>Mon Profil</button>
+                                            </form>
+                                        </li>
+                                        
+                                        ");
+
+                                    } else {
+                                        echo ("
+                                        <li class='nav-item'>
+                                            <a class='nav-link m-1 ' href='./inscription.php'>
+                                                <i class='fa-solid fa-user-plus'></i>
+                                            </a>
+                                        </li>
+                                        
+                                        ");
+                                    }
+
+                                ?> 
+                                  
                             </ul>
                         </div>
                     </div>
