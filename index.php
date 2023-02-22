@@ -81,41 +81,32 @@
             <section class="container mt-5" id="Annonce">
                 <h2>Liste des Annonces disponible : </h2>
                 <?php 
-<<<<<<< Updated upstream
-                    if($row_count > 0) {
-                        if(isset($_POST['chercher'])) {
-                            $categorie = $_POST["categorie"];
-                            $ville = $_POST["ville"];
-                            $min_price = $_POST["Min"];
-                            $max_price = $_POST["Max"];
-                            // all input are full
-                            if(!empty($ville)) {
-                                $search_request = "SELECT * FROM `annonces` RIGHT JOIN `image` ON annonces.N_Annonce = image.N_Annonce WHERE image.IMG_Principal='oui'
-                                  AND ``annonces.Ville` = '$ville'";
-                                $search_results = $db_connection->prepare($search_request);
-                                $search_results->execute();
-                                displayCards($search_results);  
-                            } else {
-                                echo "Aucune annonce trouvée !";
-                                echo $categorie;
-                            }
-                            
-                        } else {
-                            displayCards($ad_img_principale);
+
+                    $ad_img_principale_request = "SELECT * FROM `annonces` INNER JOIN `image` ON annonces.N_Annonce = image.N_Annonce WHERE image.IMG_Principal='oui'";
+                    
+                    if(isset($_POST['chercher'])) {
+                        $categorie = $_POST["categorie"];
+                        $ville = $_POST["ville"];
+                        $min_price = $_POST["Min"];
+                        $max_price = $_POST["Max"];
+
+                        if(!empty($categorie)) {
+                            $ad_img_principale_request.=" AND annonces.C_Annonce = '$categorie'";
                         }
-=======
-                    if(3 > 0) {
-                        displayCards($ad_img_principale);
->>>>>>> Stashed changes
-                    } else {
-                        echo "Pas d'annonces trouvées !";
+                        if(!empty($ville)) {
+                            $ad_img_principale_request.=" AND annonces.Ville = '$ville'";
+                        }
+                        if(!empty($min_price)) {
+                            $ad_img_principale_request.=" AND annonces.P_Annonce > '$min_price'";
+                        }
+                        if(!empty($max_price)) {
+                            $ad_img_principale_request.=" AND annonces.P_Annonce < '$max_price'";
+                        }
+                        
                     }
-
-
-
-
-
-
+                    $ad_img_principale = $db_connection->prepare($ad_img_principale_request);
+                    $ad_img_principale->execute();
+                    displayCards($ad_img_principale);
 
                     function displayCards($arrToBeDisplayed) {
                         echo "<div class='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 mt-5'>";
