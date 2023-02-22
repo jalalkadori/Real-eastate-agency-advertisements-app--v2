@@ -111,15 +111,9 @@
                                             <h6 class='card-subtitle mb-2 text-muted'>Télé: +212".$sql_info_result[0]['N_téléphone']."</h6>
                                             <div class=''>
                                             
-                                            <button type='submit' class='btn btn-success my-1 w-100'>Modifier vos informations Personnels</button>
-                                            <button type='submit' class='btn btn-success w-100'>Modifier le mot de passe</button>
-                                            <button type='submit' class='btn btn-danger my-1 w-100'>Supprimer le compte</button>
-                                                <form class='my-1 w-100' action='modifier_compte.php'>
-                                                </form>
-                                                <form class='my-1 w-100' action='modifier_pass.php'>
-                                                </form>
-                                                <form class='my-1 w-100' action='delete_account.php'>
-                                                </form>
+                                            <a href='modifier_compte.php' class='btn btn-success my-1 w-100'>Modifier vos informations Personnels</a>
+                                            <a href='modifier_pass.php' class='btn btn-success w-100'>Modifier le mot de passe</a>
+                                            <a href='delete_account.php' class='btn btn-danger my-1 w-100'>Supprimer le compte</a>
                                             </div>
                                         
                                         </div>
