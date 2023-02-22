@@ -58,10 +58,6 @@
                                  $image_gallery_request = "SELECT * FROM `image` where `N_Annonce` = $id";
                                  $image_gallery = $db_connection->prepare($image_gallery_request);
                                  $image_gallery->execute();
-
-                              
-
-                                // <img src='".$row['CH_Image']."' class='d-block w-100'>
                               
                                     echo ("
                                     <div class='ism-slider' data-transition_type='fade' id='img-gallery'>
