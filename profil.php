@@ -1,4 +1,4 @@
-<?php include("./dbConnection.php"); error_reporting(E_ERROR | E_PARSE);?>
+<?php include("./dbConnection.php"); error_reporting(E_ERROR | E_PARSE); session_start();?>
 
 <!doctype html>
 <html lang="en">
@@ -37,8 +37,11 @@
                                         <button type='submit' class="btn btn-outline-light me-2">Logout</button>
                                     </form>
                                 </li>
-                                <li class="nav-item">
+                                <li class="">
                                     <a href="ajout.php" class="btn btn-outline-light"> + Ajouter une Annonce</a>
+                                </li>
+                                <li class="nav-item m-1">
+                                    <?= "Bonjour " . $_SESSION['full_name'] . '!';?>
                                 </li>
                             </ul>
                         </div>
@@ -47,84 +50,25 @@
             </div>
         </header>
 
-        <main class="container-fluid pt-5 mt-5">
-            <div class="container-fluid pt-5 mt-5">
-                <div class="container">
-                    <div class="row gap-1">
-                        <div class="col">
-                            <?php 
-                                if($row_count > 0) {
-                                    displayCards($ad_img_principale);
-                                } else {
-                                    echo "Pas d'annonces trouvées !";
-                                }
-            
-                                function displayCards($arrToBeDisplayed) {
-                                    echo "<div class='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4'>";
-                                    while ($row = $arrToBeDisplayed->fetch(PDO::FETCH_ASSOC)) {
-                                        echo("
-                                            <div class='col-7'>
-                                                <div class='card'>
-                                                    <img src='".$row["CH_Image"]."' class='card-img-top'>
-                                                    <div class='card-body'>
-                                                        <h6 class='card-title'>".$row["T_Annonce"]." de ".$row["Superficie"]." m²</h6>
-                                                        <div class='d-flex justify-content-between align-items-center'>
-                                                            <h5 class='text-danger fs-5'>".$row["P_Annonce"]." DH</h5>
-                                                        </div>
-                                                        <p class='fs-6'>".$row["A_Annonce"]." , ".$row["Ville"]."</p>
-                                                        <p class='fs-6'>Publié le ".$row["Date_Pub"].".</p>
-                                                        <a class='btn btn-dark w-100' href='./details.php?id=".$row["N_Annonce"]."'>Voir Plus ...</a>
-                                                        <div class='d-flex justify-content-between align-items-center mt-1'>
-                                                            <a class='btn btn-danger' href='./details.php?id=".$row["N_Annonce"]."'>Supprimer</a>
-                                                            <a class='btn btn-success' href='./details.php?id=".$row["N_Annonce"]."'>Modifer</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>"
-            
-                                        );
-                                    } 
-                                    echo "</div>";
-                                }
-                                    
-                                    ?>
-                        </div>
-                                <?php 
-                                    echo("
-                                    
-                                        <div class='col-3'>
-                                            <div class='card'>
-                                                <div class='card-body'>
-                                                    <h5 class='card-title'>Informations Personnels</h5>
-                                                    <h6 class='card-subtitle mb-2 text-muted'>Nom et pronom</h6>
-                                                    <p class='card-text'>Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                                    <a href='#' class='card-link'>Card link</a>
-                                                    <a href='#' class='card-link'>Another link</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ");
-                                ?>
-                            
-                        
-                    </div>
-                </div>
-            </div>
-        <main class="container-fluid mt-5 pt-5">
-            <?php
-            session_start();
+
+<main class="container-fluid mt-5 pt-5 d-flex flex-wrap">
+<?php
 
             if(isset($_SESSION['email'])){
                 $email = $_SESSION['email'];
-                $sql = "SELECT * FROM annonces LEFT JOIN client ON client.N_Client = annonces.N_Client WHERE client.Email_client = '$email'";
+                $N_Client = $_SESSION['N_Client'];
+                $sql = "SELECT * FROM annonces WHERE annonces.N_Client = '$N_Client'";
                 $sql_response = $db_connection->prepare($sql);
                 $sql_response->execute();
                 $sql_result = $sql_response->fetchAll(PDO::FETCH_ASSOC);
-                $count = $sql_response->rowCount();                        
-
+                $count = $sql_response->rowCount();
+                $_SESSION['fname'] = $sql_result[0]['Prénom_Client'];
+                $_SESSION['lname'] = $sql_result[0]['Nom_Client'];
+                $_SESSION['tel'] = '0'.$sql_result[0]['N_téléphone'];
+                ;
                     for($c = 0; $c < $count; $c++){
                         echo 
-                        "<div class='col mt-2'>
+                        "<div class='m-3'>
                             <div class='card'>
                                 <img src='".$sql_result[$c]["CH_Image"]."' class='card-img-top'>
                                 <div class='card-body'>
@@ -135,18 +79,51 @@
                                     <p class='fs-6'>".$sql_result[$c]["A_Annonce"]." , ".$sql_result[$c]["Ville"]."</p>
                                     <p class='fs-6'>Publié le ".$sql_result[$c]["Date_Pub"].".</p>
                                     <a class='btn btn-dark w-100' href='./details.php?id=".$sql_result[$c]["N_Annonce"]."'>Voir Plus ...</a>
+                                    <div class='d-flex justify-content-between align-items-center mt-1'>
+                                        <a class='btn btn-danger' href='./details.php?id=".$sql_result[$c]["N_Annonce"]."'>Supprimer</a>
+                                        <a class='btn btn-success' href='./details.php?id=".$sql_result[$c]["N_Annonce"]."'>Modifer</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>"       ;
+                        </div>";
                     }
-
-                }else{
+                    $sql_info = "SELECT Nom_Client, Prénom_Client, Email_client, N_téléphone FROM client WHERE client.N_Client = '$N_Client'";
+                    $sql_info_response = $db_connection->prepare($sql_info);
+                    $sql_info_response->execute();
+                    $sql_info_result = $sql_info_response->fetchAll(PDO::FETCH_ASSOC);
+                    $count = $sql_info_response->rowCount();                    
+                    echo("
+                    <div class='col-3 m-3'>
+                        <div class='card'>
+                            <div class='card-body'>
+                                <h5 class='card-title'>Informations Personnels:</h5>
+                                <h6 class='card-subtitle mb-2 text-muted'>Name: ".$sql_info_result[0]['Nom_Client'] . ' '. $sql_info_result[0]['Prénom_Client']."</h6>
+                                <h6 class='card-subtitle mb-2 text-muted'>Email: ".$sql_info_result[0]['Email_client']."</h6>
+                                <h6 class='card-subtitle mb-2 text-muted'>Télé: +212".$sql_info_result[0]['N_téléphone']."</h6>
+                                <div class='d-flex flex-wrap justify-content-center m-2'>
+                                    <form class='m-1 ps-5 pe-5' action='modifier_compte.php'>
+                                        <button type='submit' class='btn btn-success'>Modifier les informations Personnels</button>
+                                    </form>
+                                    <form class='m-1 ps-5 pe-5' action='modifier_pass.php'>
+                                        <button type='submit' class='btn btn-success '>Modifier le mot de passe</button>
+                                    </form>
+                                    <form class='m-1 ps-5 pe-5' action='delete_account.php'>
+                                        <button type='submit' class='btn btn-danger'>Supprimer le compte</button>
+                                    </form>
+                                </div>
+                            
+                            </div>
+                        </div>
+                    </div>
+                ");
+    
+            }
+            else{
                 header('Location: connection.php');
             }
-                  
             
             ?>
-        </main>
+</main>
 
 
 

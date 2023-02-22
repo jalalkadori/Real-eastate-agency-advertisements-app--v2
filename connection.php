@@ -48,7 +48,7 @@
             if(isset($_POST['btn'])){
                 $email = $_POST['email'];
 
-                $sql_check = "SELECT N_Client, Email_client, pass FROM client WHERE Email_client = '$email'";
+                $sql_check = "SELECT N_Client, Nom_Client, Prénom_Client, Email_client, pass FROM client WHERE Email_client = '$email'";
                 $sqlresponse = $db_connection->prepare($sql_check);
                 $sqlresponse->execute();
                 $sqlresult = $sqlresponse->fetch( PDO::FETCH_ASSOC );
@@ -65,6 +65,8 @@
                     session_start();
                     $_SESSION['email'] = $_POST['email'];
                     $_SESSION['password'] = $_POST['password'];
+                    $_SESSION['N_Client'] = $sqlresult['N_Client'];
+                    $_SESSION['full_name'] = $sqlresult['Nom_Client'] . ' ' . $sqlresult['Prénom_Client'];
                     header('Location: profil.php');
                 }
 

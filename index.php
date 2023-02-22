@@ -81,7 +81,6 @@
             <section class="container mt-5" id="Annonce">
                 <h2>Liste des Annonces disponible : </h2>
                 <?php 
-<<<<<<< Updated upstream
                     if($row_count > 0) {
                         if(isset($_POST['chercher'])) {
                             $categorie = $_POST["categorie"];
@@ -103,13 +102,12 @@
                         } else {
                             displayCards($ad_img_principale);
                         }
-=======
-                    if(3 > 0) {
-                        displayCards($ad_img_principale);
->>>>>>> Stashed changes
-                    } else {
-                        echo "Pas d'annonces trouvées !";
                     }
+                    // if(3 > 0) {
+                    //     displayCards($ad_img_principale);
+                    // } else {
+                    //     echo "Pas d'annonces trouvées !";
+                    // }
 
 
 
