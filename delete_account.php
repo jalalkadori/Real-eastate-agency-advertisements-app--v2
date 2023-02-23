@@ -60,10 +60,11 @@
     if(isset($_SESSION['email'])){
         if(isset($_POST['delete'])){
             $N_Client = $_SESSION['N_Client'];
-            $db_connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, 1);
+            $N_Annonce = $_SESSION['N_Annonce'];
             $delete = 
-            "DELETE FROM `client` WHERE `client`.`N_Client` = '$N_Client';
-            DELETE FROM `annonces` WHERE `annonces`.`N_Client` = '$N_Client';";
+            "DELETE FROM `image` WHERE `image`.`N_Annonce` = '$N_Annonce';
+            DELETE FROM `annonces` WHERE `annonces`.`N_Client` = '$N_Client';
+            DELETE FROM `client` WHERE `client`.`N_Client` = '$N_Client';";
             $apply = $db_connection->prepare($delete);
             $apply->execute();
             header('Location: ./inscription.php');

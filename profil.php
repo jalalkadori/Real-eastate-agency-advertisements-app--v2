@@ -63,8 +63,9 @@
                             $sql_response = $db_connection->prepare($sql);
                             $sql_response->execute();
                             $sql_result = $sql_response->fetchAll(PDO::FETCH_ASSOC);
+                            $_SESSION['N_Annonce'] = $sql_result[0]['N_Annonce'];
                             $count = $sql_response->rowCount();
-                            
+
                     echo "<div class='col-6 m-3'>";
                     echo "<div class='row row-cols-2'>";
                                 for($c = 0; $c < $count; $c++){
@@ -81,10 +82,12 @@
                                                     <p class='fs-6'>".$sql_result[$c]["A_Annonce"]." , ".$sql_result[$c]["Ville"]."</p>
                                                     <p class='fs-6'>Publié le ".$sql_result[$c]["Date_Pub"].".</p>
                                                     <a class='btn btn-dark w-100' href='./details.php?id=".$sql_result[$c]["N_Annonce"]."'>Voir Plus ...</a>
-                                                    <div class='d-flex justify-content-between align-items-center mt-1'>
-                                                        <a class='btn btn-danger' href='./details.php?id=".$sql_result[$c]["N_Annonce"]."'>Supprimer</a>
-                                                        <a class='btn btn-success' href='./details.php?id=".$sql_result[$c]["N_Annonce"]."'>Modifer</a>
-                                                    </div>
+                                                    <form method='get' action='./details.php' class='d-flex justify-content-between align-items-center mt-1'>
+                                                        <button name='N_Annonce' class='btn btn-success w-100' value='".$sql_result[$c]["N_Annonce"]."'>Modifer</button>
+                                                    </form>
+                                                    <form method='get' action='./delete_ad.php' class='d-flex justify-content-between align-items-center mt-1 '>
+                                                        <button name='N_Annonce' class='btn btn-danger w-100' value='".$sql_result[$c]["N_Annonce"]."'>Supprimer</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>

@@ -47,8 +47,8 @@
         echo 
         '<section class="mt-5" >
             <div class="content mt-5">
-                <h1>Voulez-vous vraiment supprimer votre compte ?</h1>
-                <p>Cela entraînera la suppression de toutes vos annonces!</p>
+                <h1>Voulez-vous vraiment supprimer cette annonce ?</h1>
+                <p>Vous ne pouvez pas le récupérer, ainsi que ses données !</p>
                 <form method="post" class="buttons">
                     <button name="delete" class="btnYes">Yes</button>
                     <button name="back" class="btnBack">Back</button>
@@ -57,16 +57,17 @@
         </section>';
     // }
         session_start();
+        $N_Client = $_SESSION['N_Client'];
+        $N_Annonce = $_GET['N_Annonce'];
+        echo $N_Annonce;
+
     if(isset($_SESSION['email'])){
         if(isset($_POST['delete'])){
-            $N_Client = $_SESSION['N_Client'];
-            $db_connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, 1);
-            $delete = 
-            "DELETE FROM `client` WHERE `client`.`N_Client` = '$N_Client';
-            DELETE FROM `annonces` WHERE `annonces`.`N_Client` = '$N_Client';";
+            $delete = "DELETE FROM `image` WHERE `image`.`N_Annonce` = '$N_Annonce';
+            DELETE FROM `annonces` WHERE `annonces`.`N_Annonce` = '$N_Client';";
             $apply = $db_connection->prepare($delete);
             $apply->execute();
-            header('Location: ./inscription.php');
+            header('Location: ./profil.php');
         }elseif(isset($_POST['back'])){
             header('Location: ./profil.php');
         }
