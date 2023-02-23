@@ -139,7 +139,7 @@
 
                     $filedestination = 'images/' .$img;
                     move_uploaded_file($_FILES['CH_Image']['tmp_name'], $filedestination);
-                    }..
+                    }
                     else{
                         echo 'Extension non autorisée !!';
                     }
