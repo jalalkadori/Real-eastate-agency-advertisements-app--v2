@@ -1,5 +1,5 @@
 
-<?php include("./dbConnection.php");    error_reporting(E_ERROR | E_PARSE);
+<?php include("./dbConnection.php"); session_start();   error_reporting(E_ERROR | E_PARSE);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,85 +40,83 @@
             </div>
         </header>
 <?php          
-    if(isset($_POST['submit'])){
+if(isset($_POST['submit'])){
+        $T_Annonce = $_POST['T_Annonce']; 
+        $P_Annonce = $_POST['P_Annonce']; 
+        $Date_Pub = $_POST['Date_Pub'];
+        $A_Annonce = $_POST['A_Annonce'];
+        $C_Annonce = $_POST['C_Annonce'];
+        echo $Type_Annonce = $_POST['Type_Annonce'];
+        $N_Client = $_POST['N_Client'];
+        $Superficie = $_POST['Superficie'];
+        $Ville = $_POST['Ville'];
 
+        echo $N_Client = $_SESSION['N_Client'];
+
+
+
+
+
+
+        $image = $_FILES['image']['name'];
+        $allowedExtensions = array('jpg', 'png', 'jpeg');
+        $image_p_name = 'images/'.$image;
+        $image_p_tmp_name = $_FILES['image']['tmp_name'];
+        $image_Extension = explode('.', $image_p_name);     
+        $image_Extensions = strtolower(end($image_Extension));
+
+
+
+    #must form be validated..!
+    if(empty($T_Annonce)){
+            $error_titre = 'Please choose a title!';
+    }elseif(empty($image)){
+        $error_p_image = 'Please choose The Principale image!';
+    }elseif(!in_array($image_Extensions, $allowedExtensions)){
+        $error_p_image = 'Not allowed file extension';
+    }
+    else{
+    
         $get_last_id = "SELECT N_Annonce FROM annonces ORDER BY N_Annonce DESC LIMIT 1";
         $sql_response = $db_connection->prepare($get_last_id);
         $sql_response->execute();
         $sql_result = $sql_response->fetch(PDO::FETCH_ASSOC);
         $n_annonce = array_sum(array($sql_result['N_Annonce'], 1));
-        $create_table = "INSERT INTO `annonces` (N_Annonce, T_Annonce) VALUES('$n_annonce','empty')";
+        $create_table = "INSERT INTO `annonces` (N_Annonce, T_Annonce, P_Annonce,Date_Pub,Date_Modif,A_Annonce,C_Annonce,Type_Annonce,N_Client,Superficie,Ville)
+        VALUES('$n_annonce','$T_Annonce', '$P_Annonce', '$Date_Pub', '$Date_Modif', '$A_Annonce', '$C_Annonce', '$Type_Annonce', '$N_Client', '$Superficie', '$Ville')";
         $send_table = $db_connection -> prepare($create_table);
         $send_table->execute();
         $_SESSION['id_annonce'] = $n_annonce;
         $n_annonce = $_SESSION['id_annonce'];
-        echo $n_annonce;
         $T_Annonce = $_POST['T_Annonce']; 
-        #IMAGES________________________________
-        $IMG_Principal = $_FILES['IMG_Principal']['name']; 
-        $IMG_Principal_Path = $_FILES['IMG_Principal']['tmp_name']; 
+        #__________________Upload_IMG_Principal__________________
+        $upload_image_p = "INSERT INTO `image` (CH_Image, IMG_Principal, N_Annonce) VALUES('$image_p_name', 'oui', '$n_annonce')";
+        move_uploaded_file($image_p_tmp_name, $image_p_name);
+        $send_data_p = $db_connection -> prepare($upload_image_p);
+        $send_data_p->execute();
+
+
+
+        #__________________Upload_other_images__________________
+
         $images = $_FILES['images']['name']; 
         $images_Path = $_FILES['images']['tmp_name'];
-
-        $allowedExtensions = array('jpg', 'png', 'jpeg');
         $imagescount = count($_FILES['files']['name']);
+
         for($i = 0; $i < $imagescount; $i++){
             $image_name = 'images/'.$_FILES['files']['name'][$i];
             $image_tmp_name = $_FILES['files']['tmp_name'][$i];
             $fileExtension = explode('.', $image_name);     
             $fileExtensions = strtolower(end($fileExtension));     
-            if(!in_array($fileExtensions, $allowedExtensions)){
-                $error_image = 'Not allowed file extension or you cant keep image empty';
-                $NotAllowed = true;
-            }else{
-                $upload_image = "INSERT INTO `image` (CH_Image, IMG_Principal, N_Annonce) VALUES('$image_name', 'non', '$n_annonce')";
-                move_uploaded_file($image_tmp_name, $image_name);
-                $send_data = $db_connection -> prepare($upload_image);
-                $send_data->execute();
-            }
+
+            $upload_image = "INSERT INTO `image` (CH_Image, IMG_Principal, N_Annonce) VALUES('$image_name', 'non', '$n_annonce')";
+            move_uploaded_file($image_tmp_name, $image_name);
+            $send_data = $db_connection -> prepare($upload_image);
+            $send_data->execute();
         }
-
-
-
-        $image_p_name = 'images/'.$_FILES['image']['name'];
-        $image_p_tmp_name = $_FILES['image']['tmp_name'];
-        $image_Extension = explode('.', $image_p_name);     
-        $image_Extensions = strtolower(end($image_Extension));
-
-        if(!in_array($image_Extensions, $allowedExtensions)){
-            $error_p_image = 'Not allowed file extension or you cant keep image empty';
-        }else{
-            $upload_image_p = "INSERT INTO `image` (CH_Image, IMG_Principal, N_Annonce) VALUES('$image_p_name', 'oui', '$n_annonce')";
-            move_uploaded_file($image_p_tmp_name, $image_p_name);
-            $send_data_p = $db_connection -> prepare($upload_image_p);
-            $send_data_p->execute();
-        }
-
-
-
-
-
-
-    // $fileExtension = explode('.', $IMG_Principal);     
-    // $fileExtensions = strtolower(end($fileExtension));     
-    // $fileExtensions;
-    // $allowedExtensions = array('jpg', 'png', 'jpeg', ' ');
-        // foreach($_FILES['images']['name'] as $key => $value){
-        //     echo $img = $_FILES['images']['name'][$value];
-        // }
-    // printf($images);
-    // if(!in_array($fileExtensions, $allowedExtensions)){
-    //     $error_image_p = 'Not allowed file extension or you cant keep image empty';
-    // }
-
-    #_____________________________________
-    $T_Annonce = $_POST['T_Annonce']; 
-    $P_Annonce = $_POST['P_Annonce']; 
-    $D_Annonce = $_POST['Date_Pub'];
-    $A_Annonce = $_POST['A_Annonce'];
-    $C_Annonce = $_POST['C_Annonce'];
-    $Type_Annonce = $_POST['Type_Annonce'];
-
+        #__________________________________________________________
+        header('Location: profil.php')
+    }
 
 }
 
@@ -132,43 +130,52 @@
                             <form method='POST' action='' enctype='multipart/form-data'>
                                 <div class="mb-3">
                                     <label class="form-label">Titre d'anonce</label>
-                                    <input type="text" class="form-control" name="Titre">
-                                    <span class="text-danger"></span>
+                                    <input type="text" class="form-control" name="T_Annonce">
+                                    <span class="text-danger"><?=$error_titre?></span>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label m-0 p-0">Image Principal</label>
                                     <p class='text-secondary mb-2' style='font-size: 12px'>l'image principale va apparaître dans la page d'accueil!</p>
                                     <input type="file" name="image">
-                                    <span class="text-danger"><?=$error_image_p?></span>
+                                    <span class="text-danger"><?=$error_p_image?></span>
                                 </div>                                
                                 <div class="mb-3">
                                     <label class="form-label">Autres photos</label>
-                                    <input type="file" name="files[]" multiple >
+                                    <input type="file" name="files[]" multiple>
                                     <span class="text-danger"><?=$error_image?></span>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Prix</label>
-                                    <input type="number" class="form-control" name="prix">
+                                    <input type="number" class="form-control" name="P_Annonce">
                                     <span class="text-danger"></span>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Date de la publication : </label>
-                                    <input type="date" class="form-control" name="prix">
+                                    <input type="date" class="form-control" name="Date_Pub">
                                     <span class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Ville : </label>
+                                    <select class="form-select" aria-label="type" name="Ville">
+                                        <option></option>
+                                        <option value="tangier">tangier</option>
+                                        <option value="asilah">asilah</option>
+                                        <option value="casablanca">casablanca</option>
+                                        <option value="rabat">rabat</option>
+                                        <option value="fes">fes</option>
+                                        <option value="tetouan">tetouan</option>
+                                        <option value="nador">nador</option>
+                                        <option value="marakech">marakech</option>
+                                    </select>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Adresse : </label>
-                                    <textarea class="form-control" name="prix" cols="30" rows="2"></textarea>
-                                    <span class="text-danger"></span>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Titre d'anonce</label>
-                                    <input type="text" class="form-control" name="Titre">
+                                    <textarea class="form-control" name="A_Annonce" cols="30" rows="2"></textarea>
                                     <span class="text-danger"></span>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Categorie d'annonce : </label>
-                                    <select class="form-select" aria-label="type" name="categorie">
+                                    <select class="form-select" aria-label="type" name="C_Annonce">
                                         <option></option>
                                         <option value="Location">Location</option>
                                         <option value="Vente">Vente</option>
@@ -176,7 +183,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Type d'annonce : </label>
-                                    <select class="form-select" aria-label="type" name="type">
+                                    <select class="form-select" aria-label="type" name="Type_Annonce">
                                         <option></option>
                                         <option value="appartement">appartement</option>
                                         <option value="maison">maison</option>
@@ -187,7 +194,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Superficie : </label>
-                                    <input type="number" class="form-control" name="prix">
+                                    <input type="number" class="form-control" name="Superficie">
                                     <span class="text-danger"></span>
                                 </div>
                                                     
