@@ -79,11 +79,6 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Titre d'anonce</label>
-                                    <input type="text" class="form-control" name="Titre">
-                                    <span class="text-danger"></span>
-                                </div>
-                                <div class="mb-3">
                                     <label class="form-label">Categorie d'annonce : </label>
                                     <select class="form-select" aria-label="type" name="C_Annonce">
                                         <option></option>
