@@ -46,7 +46,7 @@
                     <div class="col d-flex justify-content-center">
                     <div class="card" style="width: 20rem;">
                         <div class="card-body">
-                            <form method='POST' action=''>
+                            <form  enctype="multipart/form-data" action="" method="post" >
                                 <div class="mb-3">
                                     <label class="form-label">Titre d'anonce</label>
                                     <input type="text" class="form-control" name="T_Annonce">
