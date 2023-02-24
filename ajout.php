@@ -1,8 +1,6 @@
 
 <?php include("./dbConnection.php");    error_reporting(E_ERROR | E_PARSE);
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
