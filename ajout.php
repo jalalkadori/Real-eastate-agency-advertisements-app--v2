@@ -100,7 +100,7 @@
                                 <div class="mb-3">
                                 <input class="form-control"type="hidden"  value="30000"  name="CH_Image" multiple/>
                                 <input name="CH_Image" type="file" multiple/>
-                            </div>
+                                </div>
                                 
 
                                 <div class="mb-3">
@@ -118,13 +118,6 @@
             </div>
         </main>    
         <!-- <?php
-                
-
-
-
-
-                
-                
 
                     if(isset($_POST['submit'])){
                         $T_Annonce = $_POST['T_Annonce']; 
@@ -157,7 +150,7 @@
                         $superficie = $_POST['superficie'];
 
 
-                        $sql ="INSERT INTO `annonces` (T_Annonce , P_Annonce , Date_Pub , A_Annonce , C_Annonce , Type_Annonce , Ville , Superficie) VALUE('$T_Annonce' , '$P_Annonce' , '$D_Annonce' , '$A_Annonce' , '$C_Annonce' , '$Type_Annonce' , '$ville' , '$superficie')";
+                        $sql =" INSERT INTO `annonces` (T_Annonce , P_Annonce , Date_Pub , A_Annonce , C_Annonce , Type_Annonce , Ville , Superficie) VALUE('$T_Annonce' , '$P_Annonce' , '$D_Annonce' , '$A_Annonce' , '$C_Annonce' , '$Type_Annonce' , '$ville' , '$superficie')";
                         
 
                         $insert_info = $db_connection->prepare($sql);
