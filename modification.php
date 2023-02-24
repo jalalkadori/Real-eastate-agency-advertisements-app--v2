@@ -10,8 +10,6 @@ $ad_update_response->execute();
 
 $ad_update = $ad_update_response->fetch(PDO::FETCH_ASSOC);
 
-
-
 ?>
 
 
@@ -66,7 +64,7 @@ $ad_update = $ad_update_response->fetch(PDO::FETCH_ASSOC);
                                     <input type="text" class="form-control" name="T_Annonce" value='<?php echo $ad_update['T_Annonce']?>'>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Image Principal</label>
+                                    <label class="form-label">Choisir une nouvelle Image Principal</label>
                                     <input type="file" class="form-control" name="image">
                                     <h6 class='text-secondary' style='font-size: 12px'>l'image principale va apparaître dans la page d'accueil!</h6>
                                 </div>                                
@@ -97,7 +95,7 @@ $ad_update = $ad_update_response->fetch(PDO::FETCH_ASSOC);
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Categorie d'annonce : </label>
-                                    <select class="form-select" aria-label="type" name="C_Annonce" value='<?php echo $ad_update['C_Annonce']?>'>
+                                    <select class="form-select" aria-label="type" name="C_Annonce">
                                         <option value='<?php echo $ad_update['C_Annonce']?>' selected><?php echo $ad_update['C_Annonce']?></option>
                                         
                                     </select>
@@ -114,7 +112,7 @@ $ad_update = $ad_update_response->fetch(PDO::FETCH_ASSOC);
                                     <span class="text-danger"></span>
                                 </div>
                                                     
-                                <button type="btn" name='submit' class="btn btn-success w-100">Confirmer</button>
+                                <button type="btn" name='update' class="btn btn-success w-100">Mettre à jour </button>
                             </form>
                         </div>
                         </div>
@@ -123,7 +121,27 @@ $ad_update = $ad_update_response->fetch(PDO::FETCH_ASSOC);
             </div>
         </div>
     </main>    
+    <?php 
+        if(isset($_POST['update'])) {
+            $titre = $_POST['T_Annonce'];
+            $prix = $_POST['P_Annonce'];
+            $date_modif = $_POST['Date_Pub'];
+            $ville = $_POST['Ville'];
+            $adresse = $_POST['A_Annonce'];
+            $category = $_POST['C_Annonce'];
+            $type = $_POST['Type_Annonce'];
+            $superficie = $_POST['Superficie'];
 
+            $ad_update_request = "UPDATE `annonces` SET `T_Annonce` = '$titre',`P_Annonce` = '$prix', `Date_Modif` = '$date_modif', `A_Annonce` = '70, rue du Marché', `C_Annonce` = '$category', `Type_Annonce`='$type', `Superficie` = '$superficie', `Ville` = '$ville' WHERE `annonces`.`N_Annonce` = '$N_Annonce'";
+            $ad_update = $db_connection->prepare($ad_update_request);
+            $ad_update->execute();
+        }
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+          
+            header('Location: profil.php');
+            exit; // Make sure to exit after redirecting
+        }
+        ?>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
