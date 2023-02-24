@@ -1,5 +1,6 @@
 
-<?php include("./dbConnection.php"); ?>
+<?php include("./dbConnection.php");    error_reporting(E_ERROR | E_PARSE);
+?>
 
 
 <!DOCTYPE html>
@@ -40,17 +41,112 @@
                 </div>
             </div>
         </header>
+<?php          
+    if(isset($_POST['submit'])){
+
+        $get_last_id = "SELECT N_Annonce FROM annonces ORDER BY N_Annonce DESC LIMIT 1";
+        $sql_response = $db_connection->prepare($get_last_id);
+        $sql_response->execute();
+        $sql_result = $sql_response->fetch(PDO::FETCH_ASSOC);
+        $n_annonce = array_sum(array($sql_result['N_Annonce'], 1));
+        $create_table = "INSERT INTO `annonces` (N_Annonce, T_Annonce) VALUES('$n_annonce','empty')";
+        $send_table = $db_connection -> prepare($create_table);
+        $send_table->execute();
+        $_SESSION['id_annonce'] = $n_annonce;
+        $n_annonce = $_SESSION['id_annonce'];
+        echo $n_annonce;
+        $T_Annonce = $_POST['T_Annonce']; 
+        #IMAGES________________________________
+        $IMG_Principal = $_FILES['IMG_Principal']['name']; 
+        $IMG_Principal_Path = $_FILES['IMG_Principal']['tmp_name']; 
+        $images = $_FILES['images']['name']; 
+        $images_Path = $_FILES['images']['tmp_name'];
+
+        $allowedExtensions = array('jpg', 'png', 'jpeg');
+        $imagescount = count($_FILES['files']['name']);
+        for($i = 0; $i < $imagescount; $i++){
+            $image_name = 'images/'.$_FILES['files']['name'][$i];
+            $image_tmp_name = $_FILES['files']['tmp_name'][$i];
+            $fileExtension = explode('.', $image_name);     
+            $fileExtensions = strtolower(end($fileExtension));     
+            if(!in_array($fileExtensions, $allowedExtensions)){
+                $error_image = 'Not allowed file extension or you cant keep image empty';
+                $NotAllowed = true;
+            }else{
+                $upload_image = "INSERT INTO `image` (CH_Image, IMG_Principal, N_Annonce) VALUES('$image_name', 'non', '$n_annonce')";
+                move_uploaded_file($image_tmp_name, $image_name);
+                $send_data = $db_connection -> prepare($upload_image);
+                $send_data->execute();
+            }
+        }
+
+
+
+        $image_p_name = 'images/'.$_FILES['image']['name'];
+        $image_p_tmp_name = $_FILES['image']['tmp_name'];
+        $image_Extension = explode('.', $image_p_name);     
+        $image_Extensions = strtolower(end($image_Extension));
+
+        if(!in_array($image_Extensions, $allowedExtensions)){
+            $error_p_image = 'Not allowed file extension or you cant keep image empty';
+        }else{
+            $upload_image_p = "INSERT INTO `image` (CH_Image, IMG_Principal, N_Annonce) VALUES('$image_p_name', 'oui', '$n_annonce')";
+            move_uploaded_file($image_p_tmp_name, $image_p_name);
+            $send_data_p = $db_connection -> prepare($upload_image_p);
+            $send_data_p->execute();
+        }
+
+
+
+
+
+
+    // $fileExtension = explode('.', $IMG_Principal);     
+    // $fileExtensions = strtolower(end($fileExtension));     
+    // $fileExtensions;
+    // $allowedExtensions = array('jpg', 'png', 'jpeg', ' ');
+        // foreach($_FILES['images']['name'] as $key => $value){
+        //     echo $img = $_FILES['images']['name'][$value];
+        // }
+    // printf($images);
+    // if(!in_array($fileExtensions, $allowedExtensions)){
+    //     $error_image_p = 'Not allowed file extension or you cant keep image empty';
+    // }
+
+    #_____________________________________
+    $T_Annonce = $_POST['T_Annonce']; 
+    $P_Annonce = $_POST['P_Annonce']; 
+    $D_Annonce = $_POST['Date_Pub'];
+    $A_Annonce = $_POST['A_Annonce'];
+    $C_Annonce = $_POST['C_Annonce'];
+    $Type_Annonce = $_POST['Type_Annonce'];
+
+
+}
+
+?>
         <main class="mt-5 pt-5">
             <div class="container-fluid pt-5">
                 <div class="row">
                     <div class="col d-flex justify-content-center">
                     <div class="card" style="width: 20rem;">
                         <div class="card-body">
-                            <form method='POST' action=''>
+                            <form method='POST' action='' enctype='multipart/form-data'>
                                 <div class="mb-3">
                                     <label class="form-label">Titre d'anonce</label>
                                     <input type="text" class="form-control" name="Titre">
                                     <span class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label m-0 p-0">Image Principal</label>
+                                    <p class='text-secondary mb-2' style='font-size: 12px'>l'image principale va apparaître dans la page d'accueil!</p>
+                                    <input type="file" name="image">
+                                    <span class="text-danger"><?=$error_image_p?></span>
+                                </div>                                
+                                <div class="mb-3">
+                                    <label class="form-label">Autres photos</label>
+                                    <input type="file" name="files[]" multiple >
+                                    <span class="text-danger"><?=$error_image?></span>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Prix</label>
@@ -97,106 +193,92 @@
                                     <span class="text-danger"></span>
                                 </div>
                                                     
-                                <button type="submit" name='btn' class="btn btn-success w-100">Confirmer</button>
+                                <button type="btn" name='submit' class="btn btn-success w-100">Confirmer</button>
                             </form>
                         </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>    
-        <!-- <?php
-                
+        </main>  
 
 
+<?php
+        //                 $image = $_FILES['CH_Image']['name'];
+        //             //  $filetype = $_FILES['CH_Image']['type'];
+        //                 $fileExtension = explode('.', $image);     
+        //                 $fileExtensions = strtolower(end($fileExtension));     
+        //                 echo 'test '.$fileExtensions;
+        //                 $allowedExtensions = array('jpg', 'png', 'jpeg','jfif');
 
-
-                
-                
-
-                    if(isset($_POST['submit'])){
-                        $T_Annonce = $_POST['T_Annonce']; 
-                        $P_Annonce = $_POST['P_Annonce']; 
-                        $D_Annonce = $_POST['Date_Pub'];
-                        $A_Annonce = $_POST['A_Annonce'];
-                        $C_Annonce = $_POST['C_Annonce'];
-                        $Type_Annonce = $_POST['Type_Annonce'];
-
-                        $image = $_FILES['CH_Image']['name'];
-                    //  $filetype = $_FILES['CH_Image']['type'];
-                        $fileExtension = explode('.', $image);     
-                        $fileExtensions = strtolower(end($fileExtension));     
-                        echo 'test '.$fileExtensions;
-                        $allowedExtensions = array('jpg', 'png', 'jpeg','jfif');
-
-                        if(in_array($fileExtensions, $allowedExtensions)){
+        //                 if(in_array($fileExtensions, $allowedExtensions)){
                             
-                        $img = uniqid('IMG-', true).".".$fileExtensions;
+        //                 $img = uniqid('IMG-', true).".".$fileExtensions;
 
-                        $filedestination = 'images/' .$img;
-                        move_uploaded_file($_FILES['CH_Image']['tmp_name'], $filedestination);
-                        }
-                        else{
-                            echo 'Extension non autorisée !!';
-                        }
-
-
-                        $ville = $_POST['ville'];
-                        $superficie = $_POST['superficie'];
+        //                 $filedestination = 'images/' .$img;
+        //                 move_uploaded_file($_FILES['CH_Image']['tmp_name'], $filedestination);
+        //                 }
+        //                 else{
+        //                     echo 'Extension non autorisée !!';
+        //                 }
 
 
-                        $sql ="INSERT INTO `annonces` (T_Annonce , P_Annonce , Date_Pub , A_Annonce , C_Annonce , Type_Annonce , Ville , Superficie) VALUE('$T_Annonce' , '$P_Annonce' , '$D_Annonce' , '$A_Annonce' , '$C_Annonce' , '$Type_Annonce' , '$ville' , '$superficie')";
+        //                 $ville = $_POST['ville'];
+        //                 $superficie = $_POST['superficie'];
+
+
+        //                 $sql ="INSERT INTO `annonces` (T_Annonce , P_Annonce , Date_Pub , A_Annonce , C_Annonce , Type_Annonce , Ville , Superficie) VALUE('$T_Annonce' , '$P_Annonce' , '$D_Annonce' , '$A_Annonce' , '$C_Annonce' , '$Type_Annonce' , '$ville' , '$superficie')";
                         
 
-                        $insert_info = $db_connection->prepare($sql);
-                        $insert_info->execute();
+        //                 $insert_info = $db_connection->prepare($sql);
+        //                 $insert_info->execute();
                         
                         
 
 
-                        $I_sql = "INSERT INTO `image`  ( CH_Image ) VALUES ('$filedestination')";
+        //                 $I_sql = "INSERT INTO `image`  ( CH_Image ) VALUES ('$filedestination')";
 
-                        $insert_img = $db_connection->prepare($I_sql);
-                        $insert_img->execute();
-                    }
+        //                 $insert_img = $db_connection->prepare($I_sql);
+        //                 $insert_img->execute();
+        //             }
                     
                 
-                    {
-                        if (strlen($T_Annonce) < 50 && strlen($P_Annonce) > 0 && strlen($D_Annonce) > 0 && strlen($A_Annonce) < 50 && strlen($C_Annonce) < 50 && strlen($Type_Annonce) < 50 && strlen($ville) < 50 && strlen($superficie) > 0 && strlen($image) < 50) {
-                        if (in_array($fileExtension, $allowedExtensions)) {
-                            if (move_uploaded_file($_FILES['CH_Image']['tmp_name'], $image)) {
-                            echo "Votre annonce a été ajouté avec succès";
-                            } else {
-                            echo "Une erreur est survenue lors de l'ajout de votre annonce";
-                            }
-                        } else {
-                            echo "Votre image doit être au format jpg, png, jpeg ou jfif";
-                        }
-                        } else {
-                        echo "Veuillez remplir tous les champs";
-                        }
-                    }  
+        //             {
+        //                 if (strlen($T_Annonce) < 50 && strlen($P_Annonce) > 0 && strlen($D_Annonce) > 0 && strlen($A_Annonce) < 50 && strlen($C_Annonce) < 50 && strlen($Type_Annonce) < 50 && strlen($ville) < 50 && strlen($superficie) > 0 && strlen($image) < 50) {
+        //                 if (in_array($fileExtension, $allowedExtensions)) {
+        //                     if (move_uploaded_file($_FILES['CH_Image']['tmp_name'], $image)) {
+        //                     echo "Votre annonce a été ajouté avec succès";
+        //                     } else {
+        //                     echo "Une erreur est survenue lors de l'ajout de votre annonce";
+        //                     }
+        //                 } else {
+        //                     echo "Votre image doit être au format jpg, png, jpeg ou jfif";
+        //                 }
+        //                 } else {
+        //                 echo "Veuillez remplir tous les champs";
+        //                 }
+        //             }  
                     
                     
-        ?> -->
+        // ?>
 
 
         <script>
-                    function() {
-                'use strict'
-                const forms = document.querySelectorAll('.requires-validation')
-                Array.from(forms)
-            .forEach(function (form) {
-                form.addEventListener('submit', function (event) {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                }
+        //             function() {
+        //         'use strict'
+        //         const forms = document.querySelectorAll('.requires-validation')
+        //         Array.from(forms)
+        //     .forEach(function (form) {
+        //         form.addEventListener('submit', function (event) {
+        //         if (!form.checkValidity()) {
+        //             event.preventDefault()
+        //             event.stopPropagation()
+        //         }
 
-                form.classList.add('was-validated')
-                }, false)
-            })
-            })()
+        //         form.classList.add('was-validated')
+        //         }, false)
+        //     })
+        //     })()
 
         </script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
