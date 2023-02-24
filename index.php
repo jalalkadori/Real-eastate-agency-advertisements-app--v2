@@ -86,7 +86,13 @@
                         <select class="form-select" aria-label="type" name="ville">
                             <option></option>
                             <option value="Tanger">Tanger</option>
+                            <option value="Asilah">Asilah</option>
                             <option value="Casablanca">Casablanca</option>
+                            <option value="Rabat">Rabat</option>
+                            <option value="Fes">Fes</option>
+                            <option value="Tetouan">Tetouan</option>
+                            <option value="Nador">Nador</option>
+                            <option value="Marakech">Marakech</option>
                         </select>
                     </div>
                     <div class="col">

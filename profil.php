@@ -37,11 +37,11 @@
                                         <button type='submit' class="btn btn-outline-light me-2">Logout</button>
                                     </form>
                                 </li>
-                                <li class="">
+                                <li class="nav-item">
                                     <a href="ajout.php" class="btn btn-outline-light"> + Ajouter une Annonce</a>
                                 </li>
-                                <li class="nav-item m-1">
-                                    <?= "Bonjour " . $_SESSION['full_name'] . '!';?>
+                                <li class="nav-item">
+                                    <a class="nav-link"><?= "Bonjour " . $_SESSION['full_name'] . '!';?></a> 
                                 </li>
                             </ul>
                         </div>
@@ -71,7 +71,7 @@
                                 for($c = 0; $c < $count; $c++){
                                     echo ("
 
-                                        <div class='col '>
+                                        <div class='col my-1'>
                                             <div class='card'>
                                                 <img src='".$sql_result[$c]["CH_Image"]."' class='card-img-top'>
                                                 <div class='card-body'>
@@ -82,7 +82,7 @@
                                                     <p class='fs-6'>".$sql_result[$c]["A_Annonce"]." , ".$sql_result[$c]["Ville"]."</p>
                                                     <p class='fs-6'>Publié le ".$sql_result[$c]["Date_Pub"].".</p>
                                                     <a class='btn btn-dark w-100' href='./details.php?id=".$sql_result[$c]["N_Annonce"]."'>Voir Plus ...</a>
-                                                    <form method='get' action='./details.php' class='d-flex justify-content-between align-items-center mt-1'>
+                                                    <form method='get' action='./modification.php' class='d-flex justify-content-between align-items-center mt-1'>
                                                         <button name='N_Annonce' class='btn btn-success w-100' value='".$sql_result[$c]["N_Annonce"]."'>Modifer</button>
                                                     </form>
                                                     <form method='get' action='./delete_ad.php' class='d-flex justify-content-between align-items-center mt-1 '>

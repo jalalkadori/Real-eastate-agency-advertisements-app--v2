@@ -1,4 +1,5 @@
-<?php include("./dbConnection.php"); error_reporting(E_ERROR | E_PARSE);?>
+<?php include("./dbConnection.php"); error_reporting(E_ERROR | E_PARSE);
+?>
 <!doctype html>
 <html lang="en">
     <head>
@@ -30,7 +31,7 @@
                                     <a href="index.php" class="nav-link active" aria-current="page">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="connection.php" class="btn btn-outline-light"> Connectez-Vous !</a>
+                                    <a href="profil.php" class="btn btn-outline-light">Mon Profil !</a>
                                 </li>
                             </ul>
                         </div>
@@ -93,7 +94,7 @@
             }  
         }
     }else{
-            header('Location: connection.php');
+            header('Location: profil.php');
         }
     
 ?>
@@ -105,6 +106,7 @@
         <main class="signupbox mt-5 pt-5">
             <div class="container-fluid pt-5">
                 <div class="row">
+                    <h4 class="text-center my-2">Mise à jour de vos information Personnels</h4>
                     <div class="col d-flex justify-content-center">
                     <div class="card" style="width: 20rem;">
                         <div class="card-body">

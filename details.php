@@ -128,7 +128,8 @@ session_start();
                                                                             <button type='button' class='btn-close btn btn-light' data-bs-dismiss='modal' aria-label='Close'></button>
                                                                         </div>
                                                                         <div class='modal-body text-center'>
-                                                                            <p class='fs-2 text-danger' >+212 ".$row["N_téléphone"]."</p>                                                                    
+                                                                            <h6 class='fs-2 text-danger' >+212 ".$row["N_téléphone"]."</h6>                                                                    
+                                                                            <h6 class='fs-2 text-dark' >".$row["Nom_Client"].' '.$row["Prénom_Client"]."</h6>                                                                    
                                                                         </div>
                                                                     </div>
                                                                 </div>

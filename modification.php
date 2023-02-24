@@ -1,5 +1,18 @@
 
-<?php include("./dbConnection.php"); ?>
+<?php include("./dbConnection.php"); session_start();
+
+
+$N_Annonce = $_GET['N_Annonce'];
+
+$ad_update_query = "SELECT * FROM annonces WHERE N_Annonce = $N_Annonce";
+$ad_update_response = $db_connection->prepare($ad_update_query);
+$ad_update_response->execute();
+
+$ad_update = $ad_update_response->fetch(PDO::FETCH_ASSOC);
+
+
+
+?>
 
 
 <!DOCTYPE html>
@@ -42,64 +55,69 @@
         </header>
     <main class="mt-5 pt-5">
         <div class="container-fluid pt-5">
-            <div class="row">
-                <div class="col d-flex justify-content-center">
-                <div class="card" style="width: 20rem;">
-                    <div class="card-body">
-                        <form method='POST' action=''>
-                            <div class="mb-3">
-                                <label class="form-label">Titre d'anonce</label>
-                                <input type="text" class="form-control" name="Titre">
-                                <span class="text-danger"></span>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Prix</label>
-                                <input type="number" class="form-control" name="prix">
-                                <span class="text-danger"></span>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Date de la publication : </label>
-                                <input type="date" class="form-control" name="prix">
-                                <span class="text-danger"></span>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Adresse : </label>
-                                <textarea class="form-control" name="prix" cols="30" rows="2"></textarea>
-                                <span class="text-danger"></span>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Titre d'anonce</label>
-                                <input type="text" class="form-control" name="Titre">
-                                <span class="text-danger"></span>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Categorie d'annonce : </label>
-                                <select class="form-select" aria-label="type" name="categorie">
-                                    <option></option>
-                                    <option value="Location">Location</option>
-                                    <option value="Vente">Vente</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Type d'annonce : </label>
-                                <select class="form-select" aria-label="type" name="type">
-                                    <option></option>
-                                    <option value="appartement">appartement</option>
-                                    <option value="maison">maison</option>
-                                    <option value="maison">maison</option>
-                                    <option value="bureau">bureau</option>
-                                    <option value="terrain">terrain</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Superficie : </label>
-                                <input type="number" class="form-control" name="prix">
-                                <span class="text-danger"></span>
-                            </div>
-                                                 
-                            <button type="submit" name='btn' class="btn btn-success w-100">Confirmer</button>
-                        </form>
-                    </div>
+            <div class="row d-flex justify-content-center">
+            <div class="row d-flex justify-content-center">
+                <div class="col col-xl-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <form method='POST' action='' enctype='multipart/form-data'>
+                                <div class="mb-3">
+                                    <label class="form-label">Titre d'anonce</label>
+                                    <input type="text" class="form-control" name="T_Annonce" value='<?php echo $ad_update['T_Annonce']?>'>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Image Principal</label>
+                                    <input type="file" class="form-control" name="image">
+                                    <h6 class='text-secondary' style='font-size: 12px'>l'image principale va apparaître dans la page d'accueil!</h6>
+                                </div>                                
+                                <div class="mb-3">
+                                    <label class="form-label">Autres photos</label>
+                                    <input type="file" name="files[]" class="form-control" multiple>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Prix</label>
+                                    <input type="number" class="form-control" name="P_Annonce" value='<?php echo $ad_update['P_Annonce']?>'>
+                                    <span class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Date de la publication : </label>
+                                    <input type="date" class="form-control" name="Date_Pub" value='<?php echo $ad_update['Date_Pub']?>'>
+                                    <span class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Ville : </label>
+                                    <select class="form-select" aria-label="type" name="Ville">
+                                        <option value='<?php echo $ad_update['Ville']?>' selected><?php echo $ad_update['Ville']?></option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Adresse : </label>
+                                    <input type="text" class="form-control" name="A_Annonce" value='<?php echo $ad_update['A_Annonce']?>'></input>
+                                    <span class="text-danger"></span>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Categorie d'annonce : </label>
+                                    <select class="form-select" aria-label="type" name="C_Annonce" value='<?php echo $ad_update['C_Annonce']?>'>
+                                        <option value='<?php echo $ad_update['C_Annonce']?>' selected><?php echo $ad_update['C_Annonce']?></option>
+                                        
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Type d'annonce : </label>
+                                    <select class="form-select" aria-label="type" name="Type_Annonce">
+                                        <option value='<?php echo $ad_update['Type_Annonce']?>' selected><?php echo $ad_update['Type_Annonce']?></option>   
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Superficie : </label>
+                                    <input type="number" class="form-control" name="Superficie" value='<?php echo $ad_update['Superficie']?>'>
+                                    <span class="text-danger"></span>
+                                </div>
+                                                    
+                                <button type="btn" name='submit' class="btn btn-success w-100">Confirmer</button>
+                            </form>
+                        </div>
+                        </div>
                     </div>
                 </div>
             </div>
