@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>IMMO HORIZON</title>
+        <title>IMMO HORIZON | Indcription </title>
         <link rel="stylesheet" href="style.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
@@ -118,7 +118,7 @@
 
 
 
-        <main class="signupbox mt-5 pt-5">
+        <main class="mt-5 pt-5">
             <div class="container-fluid pt-5">
                 <div class="row">
                     <div class="col d-flex justify-content-center">
