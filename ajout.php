@@ -114,7 +114,7 @@
                                     <span class="text-danger"></span>
                                 </div>
                                                     
-                                <button type="submit" name='btn' class="btn btn-success w-100">Confirmer</button>
+                                <button type="submit" name='submit' class="btn btn-success w-100">Confirmer</button>
                             </form>
                         </div>
                         </div>
