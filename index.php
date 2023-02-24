@@ -52,7 +52,7 @@
                                     } else {
                                         echo ("
                                         <li class='nav-item'>
-                                            <a class='nav-link m-1 ' href='./inscription.php'>
+                                            <a class='nav-link m-0 ' href='./inscription.php'>
                                                 <i class='fa-solid fa-user-plus'></i>
                                             </a>
                                         </li>
