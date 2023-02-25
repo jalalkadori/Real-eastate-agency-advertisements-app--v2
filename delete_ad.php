@@ -29,9 +29,16 @@
                                 <li class="nav-item">
                                     <a href="index.php" class="nav-link active" aria-current="page">Home</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="connection.php" class="btn btn-outline-light"> Connectez-Vous !</a>
+                                <li class='nav-item'>
+                                    <form action='profil.php' class='nav-link m-0 p-0'>
+                                        <button type='submit' class='btn btn-outline-light me-2'>Mon Profil</button>
+                                    </form>
                                 </li>
+                                <li class="nav-item">
+                                    <form action="logout.php" class="nav-link m-0 p-0">
+                                        <button type='submit' class="btn btn-outline-light me-2">Logout</button>
+                                    </form>
+                                </li> 
                             </ul>
                         </div>
                     </div>
