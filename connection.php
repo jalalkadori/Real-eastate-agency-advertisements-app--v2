@@ -69,7 +69,7 @@
                     $_SESSION['full_name'] = $sqlresult['Nom_Client'] . ' ' . $sqlresult['Prénom_Client'];
                     header('Location: profil.php');
                 }
-
+                header('Location: index.php');
             }
         }
         ?>

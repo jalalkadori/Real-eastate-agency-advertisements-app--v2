@@ -36,17 +36,17 @@
                                 <?php 
                                     if(isset($_SESSION['email'])) {
                                         echo ("
-                                        <li class='nav-item'>
-                                            <form action='logout.php' class='nav-link m-0 p-0'>
-                                                <button type='submit' class='btn btn-outline-light me-2'>Logout</button>
-                                            </form>
-                                        </li>
+                                        
                                         <li class='nav-item'>
                                             <form action='profil.php' class='nav-link m-0 p-0'>
                                                 <button type='submit' class='btn btn-outline-light me-2'>Mon Profil</button>
                                             </form>
                                         </li>
-                                        
+                                        <li class='nav-item'>
+                                            <form action='logout.php' class='nav-link m-0 p-0'>
+                                                <button type='submit' class='btn btn-outline-light me-2'>Logout</button>
+                                            </form>
+                                        </li>
                                         ");
 
                                     } else {
@@ -55,8 +55,7 @@
                                             <a class='nav-link m-0 ' href='./inscription.php'>
                                                 <i class='fa-solid fa-user-plus'></i>
                                             </a>
-                                        </li>
-                                        
+                                        </li>          
                                         ");
                                     }
 
@@ -122,7 +121,7 @@
 
                         if(!empty($categorie)) {
                             $ad_img_principale_request.=" AND annonces.C_Annonce = '$categorie'";
-                        }
+                        } 
                         if(!empty($ville)) {
                             $ad_img_principale_request.=" AND annonces.Ville = '$ville'";
                         }

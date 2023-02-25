@@ -32,16 +32,14 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="#Annonce">Annonces</a>
                                 </li>
-                                <li class="nav-item">
-                                    <form action="logout.php" class="nav-link m-0 p-0">
-                                        <button type='submit' class="btn btn-outline-light me-2">Logout</button>
-                                    </form>
-                                </li>
+                                
                                 <li class="nav-item">
                                     <a href="ajout.php" class="btn btn-outline-light"> + Ajouter une Annonce</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link"><?= "Bonjour " . $_SESSION['full_name'] . '!';?></a> 
+                                    <form action="logout.php" class="nav-link m-0 p-0">
+                                        <button type='submit' class="btn btn-outline-light me-2">Logout</button>
+                                    </form>
                                 </li>
                             </ul>
                         </div>
@@ -66,8 +64,8 @@
                             $_SESSION['N_Annonce'] = $sql_result[0]['N_Annonce'];
                             $count = $sql_response->rowCount();
 
-                    echo "<div class='col-6 m-3'>";
-                    echo "<div class='row row-cols-2'>";
+                            echo "<div class='col-6 m-3'>";
+                            echo "<div class='row row-cols-2'>";
                                 for($c = 0; $c < $count; $c++){
                                     echo ("
 
@@ -94,8 +92,8 @@
                                     ");
                                 }
 
-                    echo "</div>";
-                    echo "</div>";
+                            echo "</div>";
+                            echo "</div>";
                                 $sql_info = "SELECT Nom_Client, Prénom_Client, Email_client, N_téléphone FROM client WHERE client.N_Client = '$N_Client'";
                                 $sql_info_response = $db_connection->prepare($sql_info);
                                 $sql_info_response->execute();
@@ -122,7 +120,7 @@
                                         
                                         </div>
                                     </div>
-                    </div>
+                                </div>
                             ");
                 
                         }

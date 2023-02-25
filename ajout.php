@@ -98,7 +98,6 @@
                     $send_data_p->execute();
 
 
-
                     #__________________Upload_other_images__________________
 
                     $images = $_FILES['images']['name']; 
